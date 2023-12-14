@@ -1,3 +1,5 @@
 TOP project: TODO List 
 
+12/14 
+1024 :Yesterday saw working on creating a buttons function that got out of whack, reset back to working form.
 12/12 11:14 :Creating basic file structure.
