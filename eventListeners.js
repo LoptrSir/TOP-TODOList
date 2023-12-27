@@ -25,36 +25,6 @@ function handleChange() {
   console.log("Change");
 }
 
-// function handleDelete(event) {
-//   const button = event.target;
-//   const itemName = button.textContent.trim(); //Sets button name here
-//   console.log('Delete:', itemName);
-//   if (existingCategoryNames.has(itemName)) {
-//     const categoryId = button.id;
-//     existingCategoryNames.delete(itemName); //Remove from set
-//     const categoryElement = document.getElementById(categoryId);
-//     if (categoryElement) {
-//       categoryElement.remove(); //Remove from DOM
-//     } else {
-//       alert("Category element not found in the DOM");
-//     }
-//     alert(`${itemName} deleted`);
-//     console.log(`${itemName} deleted`);
-//   } else if (existingTaskNames.has(itemName)) {
-//     const taskId = button.id;
-//     existingTaskNames.delete(itemName); //Remove from set
-//     const taskElement = document.getElementById(taskId);
-//     if (taskElement) {
-//       taskElement.remove(); //Remove from DOM
-//     } else {
-//       alert("Task element not found in the DOM");
-//     }
-//     console.log(`${itemName} deleted`);
-//   } else {
-//     alert(`Item not found: ${itemName}`);
-//   }
-// }
-
 function handleDelete(event) {
   const element = event.target.parentElement;
   const itemName = element.dataset.name; 

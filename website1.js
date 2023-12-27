@@ -1,5 +1,5 @@
 //Create webpage file
-//project TODO's: make sure tasks assign to proper task list not just to the end of list,
+//project TODO's: delete category does'nt delete child tasks, make sure tasks assign to proper task list not just to the end of list,
 
 //imports
 import {
