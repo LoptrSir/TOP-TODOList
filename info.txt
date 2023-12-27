@@ -1,5 +1,6 @@
 TOP project: TODO List 
 
+12/27 1102: multiple dead ends wandered down in assigning category ID as category name and tracking said name. This seems fixed, tweaked createCategory.js to track category names and compare for duplicate name. name is passed to createNewCategoryDOM then sanitized to pass it as id.
 12/19 1349: after a few days of going down the rabbit hole of overly complicated buttonActions array problems. Simplified things and making headway. Created Website1.js and function modules for import.  At this point masterList, addCategory, addTask generate proper buttons.  Add buttons work.
 12/14 
 1024 :Yesterday saw working on creating a buttons function that got out of whack, reset back to working form.

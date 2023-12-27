@@ -1,4 +1,4 @@
-// Create buttons functionality
+// Create Buttons logic
 import { mouseoverHandler } from "./eventListeners.js";
 
 export function createButton(text, id, clickHandler) {

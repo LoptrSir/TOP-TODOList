@@ -1,6 +1,5 @@
 //Create webpage file
-//project TODO's: make sure tasks assign to proper task list not just to the end, 
-
+//project TODO's: make sure tasks assign to proper task list not just to the end of list,
 
 //imports
 import {
@@ -30,9 +29,11 @@ masterList.appendChild(changeNameButton);
 masterList.appendChild(deleteNameButton);
 
 export function createNewCategoryDOM(name) {
+  const sanitizedId = name.toLowerCase().replace(/\s+/g, "-");
   const createCategoryDOM = document.createElement("div");
   createCategoryDOM.classList.add("categoryList");
   createCategoryDOM.textContent = `${name}`;
+  createCategoryDOM.id = sanitizedId;
   const addTaskButton = createButton("Add Task", "addTask", handleAddTask);
   const changeNameButton = createButton("Change", "change", handleChange);
   const deleteNameButton = createButton("Delete", "delete", handleDelete);
