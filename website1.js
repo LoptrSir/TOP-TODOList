@@ -22,17 +22,18 @@ masterList.classList.add("masterList");
 masterList.textContent = "Category";
 document.querySelector(".content").appendChild(masterList);
 const addCategoryButton = createButton("Add", "add", handleAddCategory);
-const changeNameButton = createButton("Change", "change", handleChange);
-const deleteNameButton = createButton("Delete", "delete", handleDelete);
+//const changeNameButton = createButton("Change", "change", handleChange);
+//const deleteNameButton = createButton("Delete", "delete", handleDelete);
 masterList.appendChild(addCategoryButton);
-masterList.appendChild(changeNameButton);
-masterList.appendChild(deleteNameButton);
+//masterList.appendChild(changeNameButton);
+//masterList.appendChild(deleteNameButton);
 
 export function createNewCategoryDOM(name) {
   const sanitizedId = name.toLowerCase().replace(/\s+/g, "-");
   const createCategoryDOM = document.createElement("div");
   createCategoryDOM.classList.add("categoryList");
   createCategoryDOM.textContent = `${name}`;
+  createCategoryDOM.dataset.name = name;
   createCategoryDOM.id = sanitizedId;
   const addTaskButton = createButton("Add Task", "addTask", handleAddTask);
   const changeNameButton = createButton("Change", "change", handleChange);
@@ -45,9 +46,12 @@ export function createNewCategoryDOM(name) {
 }
 
 export function createNewTaskDOM(name) {
+  const sanitizeId = name.toLowerCase().replace(/\s+/g, '-');
   const createTaskDOM = document.createElement("div");
   createTaskDOM.classList.add("taskList");
+  createTaskDOM.id = sanitizeId;
   createTaskDOM.textContent = `${name}`;
+  createTaskDOM.dataset.name = name;
   const completeTaskButton = createButton(
     "Complete",
     "complete",
