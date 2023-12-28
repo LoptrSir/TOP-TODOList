@@ -1,5 +1,7 @@
 TOP project: TODO List 
 
+12/28 1211 createTask modified to assign tasks to unique category. Tasks now appear under parent category. Deleting category deletes child tasks.
+1144 handleAddTask and createTask modified to track categoryName. Next step is to get category delete button to delete the child tasks too.
 12/27 1340: Also updated createTask to track and eliminate duplicate names. Delete button is mostly working, creating a dataset.name in createNewCategory/TaskDOM and assigning name to it did the trick.  However, if I delete a category the child task elements do not delete too.
 1102: multiple dead ends wandered down in assigning category ID as category name and tracking said name. This seems fixed, tweaked createCategory.js to track category names and compare for duplicate name. name is passed to createNewCategoryDOM then sanitized to pass it as id.
 12/19 1349: after a few days of going down the rabbit hole of overly complicated buttonActions array problems. Simplified things and making headway. Created Website1.js and function modules for import.  At this point masterList, addCategory, addTask generate proper buttons.  Add buttons work.

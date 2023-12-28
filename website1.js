@@ -3,37 +3,30 @@
 
 //imports
 import {
-  mouseoverHandler,
   handleAddCategory,
   handleAddTask,
   handleChange,
   handleDelete,
 } from "./eventListeners.js";
 import { createButton } from "./button.js";
-import { createCategory } from "./createCategory.js";
-import { createTask } from "./createTask.js";
+
 
 //logic
 
 //DOM
-
 const masterList = document.createElement("div");
 masterList.classList.add("masterList");
 masterList.textContent = "Category";
 document.querySelector(".content").appendChild(masterList);
 const addCategoryButton = createButton("Add", "add", handleAddCategory);
-//const changeNameButton = createButton("Change", "change", handleChange);
-//const deleteNameButton = createButton("Delete", "delete", handleDelete);
 masterList.appendChild(addCategoryButton);
-//masterList.appendChild(changeNameButton);
-//masterList.appendChild(deleteNameButton);
 
 export function createNewCategoryDOM(name) {
   const sanitizedId = name.toLowerCase().replace(/\s+/g, "-");
   const createCategoryDOM = document.createElement("div");
   createCategoryDOM.classList.add("categoryList");
   createCategoryDOM.textContent = `${name}`;
-  createCategoryDOM.dataset.name = name;
+  createCategoryDOM.dataset.name = name; //delete function
   createCategoryDOM.id = sanitizedId;
   const addTaskButton = createButton("Add Task", "addTask", handleAddTask);
   const changeNameButton = createButton("Change", "change", handleChange);
@@ -45,13 +38,14 @@ export function createNewCategoryDOM(name) {
   return createCategoryDOM;
 }
 
-export function createNewTaskDOM(name) {
+export function createNewTaskDOM(name, categoryName) {
   const sanitizeId = name.toLowerCase().replace(/\s+/g, '-');
   const createTaskDOM = document.createElement("div");
   createTaskDOM.classList.add("taskList");
   createTaskDOM.id = sanitizeId;
   createTaskDOM.textContent = `${name}`;
-  createTaskDOM.dataset.name = name;
+  createTaskDOM.dataset.name = name; //for delete function
+  createTaskDOM.dataset.category = categoryName;
   const completeTaskButton = createButton(
     "Complete",
     "complete",
@@ -90,35 +84,3 @@ function createWebsite() {
 
 createWebsite();
 
-//Code moved to other Files
-//Found in button.js
-// function createButton(text, id, clickHandler) {
-//   const button = document.createElement("button");
-//   button.classList.add("btn");
-//   button.id = id;
-//   button.textContent = text;
-//   button.addEventListener("mouseover", mouseoverHandler);
-//   button.addEventListener("click", clickHandler);
-//   return button;
-// }
-
-//found in categoryModule.js as an export
-// function getCategoryName() {
-//   return prompt("What is the name of your new category?");
-// }
-// function checkDuplicateCategory(name) {
-//   //add logic to check for duplicate category names
-//   console.log("checkDupeCategory");
-// }
-// function createCategoryLogic(name) {
-//   //category logic here{ mouseoverHandler, handleAddCategory, handleAddTask, handleChange, handleDelete}
-//   if (checkDuplicateCategory(name)) {
-//     alert("Category Name Exists");
-//   }
-// }
-// function createCategory() {
-//   //Make this a master function with the above as sub functions
-//   const name = getCategoryName();
-//   createCategoryLogic(name);
-//   createNewCategoryDOM(name);
-// }
