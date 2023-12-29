@@ -1,5 +1,7 @@
 TOP project: TODO List 
 
+12/29 1458 undid most of previous update. eventListeners are now just a doorway to createIems.js and modifyItems.js. Broker out getUserinput and updateDOM for more consistent SOLID principle. Working on changeItem: it seems straightforward enough to do that, but the execution is a pain.  I dont see a clean path to make sure existing categories and tasks maintain their unique NewSet data so things get changed and child tasks disappear as it is now.
+1039 getName functions moved into createCategory/createTask as they will only be used there and a single function to do this is consistent with DRY but improves readability.  createTask/createCategory merged into parent evenHandlers reducing # of js files. Functions are a bit bigger as a result but still readable and deal with one topic.
 12/28 1211 createTask modified to assign tasks to unique category. Tasks now appear under parent category. Deleting category deletes child tasks.
 1144 handleAddTask and createTask modified to track categoryName. Next step is to get category delete button to delete the child tasks too.
 12/27 1340: Also updated createTask to track and eliminate duplicate names. Delete button is mostly working, creating a dataset.name in createNewCategory/TaskDOM and assigning name to it did the trick.  However, if I delete a category the child task elements do not delete too.

@@ -1,5 +1,8 @@
 //Create webpage file
-//project TODO's: delete category does'nt delete child tasks, make sure tasks assign to proper task list not just to the end of list,
+//project TODO's: change logic, add an undue btn for delete?
+//task: complete logic- button become check box with strikethrough. DueDate. Notes. etctuo'8
+
+//Create website file
 
 //imports
 import {
@@ -14,6 +17,8 @@ import { createButton } from "./button.js";
 //logic
 
 //DOM
+
+//Should masterList be in a function then called by createWebsite at bottom?
 const masterList = document.createElement("div");
 masterList.classList.add("masterList");
 masterList.textContent = "Category";
@@ -27,7 +32,7 @@ export function createNewCategoryDOM(name) {
   createCategoryDOM.classList.add("categoryList");
   createCategoryDOM.textContent = `${name}`;
   createCategoryDOM.dataset.name = name; //delete function
-  createCategoryDOM.id = sanitizedId;
+  createCategoryDOM.id = sanitizedId; //Is this needed? id is not called as lists are determined by name.  It seems to throw errors if removed.
   const addTaskButton = createButton("Add Task", "addTask", handleAddTask);
   const changeNameButton = createButton("Change", "change", handleChange);
   const deleteNameButton = createButton("Delete", "delete", handleDelete);
@@ -45,7 +50,7 @@ export function createNewTaskDOM(name, categoryName) {
   createTaskDOM.id = sanitizeId;
   createTaskDOM.textContent = `${name}`;
   createTaskDOM.dataset.name = name; //for delete function
-  createTaskDOM.dataset.category = categoryName;
+  createTaskDOM.dataset.category = categoryName; //assigns task to category
   const completeTaskButton = createButton(
     "Complete",
     "complete",
@@ -77,8 +82,7 @@ function myFooter() {
 
 //loads page
 function createWebsite() {
-  const contentDiv = document.querySelector(".content");
-  //createButton(buttonActions, masterList, masterList);
+  const contentDiv = document.querySelector(".content"); //This seems redundant to masterList
   const footer = contentDiv.appendChild(myFooter());
 }
 
