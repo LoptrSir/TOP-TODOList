@@ -22,12 +22,16 @@ function handleAddTask(event) {
 }
 
 function handleChange(event) {
- // changeItem(event);
+  changeItem(event);
   console.log("handleChange");
 }
 
 function handleDelete(event) {
   deleteItem(event);
+}
+
+function handleCompleteTask() {
+  console.log('HandleCompleteTask')
 }
 
 export {
@@ -36,6 +40,7 @@ export {
   handleAddTask,
   handleChange,
   handleDelete,
+  handleCompleteTask,
 };
 
 ///////////////////

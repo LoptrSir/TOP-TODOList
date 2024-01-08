@@ -10,6 +10,7 @@ import {
   handleAddTask,
   handleChange,
   handleDelete,
+  handleCompleteTask,
 } from "./eventListeners.js";
 import { createButton } from "./button.js";
 
@@ -54,7 +55,7 @@ export function createNewTaskDOM(name, categoryName) {
   const completeTaskButton = createButton(
     "Complete",
     "complete",
-    handleAddTask
+    handleCompleteTask
   );
   const changeNameButton = createButton("Change", "change", handleChange);
   const deleteNameButton = createButton("Delete", "delete", handleDelete);
@@ -82,8 +83,9 @@ function myFooter() {
 
 //loads page
 function createWebsite() {
-  const contentDiv = document.querySelector(".content"); //This seems redundant to masterList
+ const contentDiv = document.querySelector(".content"); //This seems redundant to masterList. Footer needs this.
   const footer = contentDiv.appendChild(myFooter());
+// myFooter();
 }
 
 createWebsite();
