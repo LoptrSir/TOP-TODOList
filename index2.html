@@ -12,9 +12,6 @@
     <div class="all-tasks">
       <h2 class="task-list-title">My Lists</h2>
       <ul class="task-list" data-lists>
-        <!-- <li class="active-list list-name">YTube</li>
-        <li class="list-name">Work</li>
-        <li class="list-name">Household</li> -->
       </ul>
       <form action="" data-new-list-form>
         <input
@@ -34,36 +31,12 @@
         <p class="task-count" data-list-count>3 tasks remain</p>
       </div>
       <div class="todo-body">
-        <div class="tasks" data-tasks>
-          <div class="task">
-            <input type="checkbox" id="task1" />
-            <label for="task1">
-              <span class="custom-checkbox"></span>
-              record todo vid
-            </label>
-          </div>
-          <!-- /task1-->
-          <div class="task">
-            <input type="checkbox" id="task2" />
-            <label for="task2">
-              <span class="custom-checkbox"></span>
-              another task
-            </label>
-          </div>
-          <!-- /task2-->
-          <div class="task">
-            <input type="checkbox" id="task3" />
-            <label for="task3">
-              <span class="custom-checkbox"></span>
-              a third task
-            </label>
-          </div>
-          <!-- /task3-->
-        </div>
+        <div class="tasks" data-tasks></div>
         <div class="new-task-creator">
-          <form action="">
+          <form action="" data-new-task-form>
             <input
               type="text"
+              data-new-task-input
               class="new task"
               placeholder="New Task Name"
               aria-label="New Task Name"
@@ -78,7 +51,9 @@
           </form>
         </div>
         <div class="delete-stuff">
-          <button class="btn delete">Clear Completed Tasks</button>
+          <button class="btn delete" data-clear-complete-tasks-button>
+            Clear Completed Tasks
+          </button>
           <button class="btn delete" data-delete-list-button>
             Delete List
           </button>
@@ -87,10 +62,9 @@
     </div>
     <template id="task-template">
       <div class="task">
-        <input type="checkbox"/>
+        <input type="checkbox" />
         <label>
           <span class="custom-checkbox"></span>
-          
         </label>
       </div>
     </template>
