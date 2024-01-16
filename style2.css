@@ -83,13 +83,20 @@ form {
     transition: opacity 250ms ease-in;
 }
 
-#btn-create {
+#btn-create-task {
     color: var(--clr-primary);
 }
 
-.btn.create:hover {
+.taskBtn {
+    order: 3;
+}
+
+.btn:hover {
     opacity: 0.4;
 }
+/* .btn.create:hover {
+    opacity: 0.4;
+} */
 
 .btn.delete {
     font-weight: 700;

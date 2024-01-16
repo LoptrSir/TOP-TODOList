@@ -1,6 +1,6 @@
 //ToDo List
 
-//To Work On: break into grid so that lists and tasks can manage their own height/spacing.  Lists bullet point animation, task due date/priority/notes, 
+//To Work On: break into grid so that lists and tasks can manage their own height/spacing.  Lists bullet point animation, task dueDate/priority/notes functionality/styling,
 
 //Global Declarations
 const listsContainer = document.querySelector("[data-lists]");
@@ -25,7 +25,6 @@ const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
-
 
 //Event Listeners
 listsContainer.addEventListener("click", (e) => {
@@ -95,9 +94,9 @@ function createTask(name) {
     id: Date.now().toString(),
     name: name,
     complete: false,
-    //insert note 
-    //insert due date
-    //insert priority
+    // dueDate: new Date(dueDate),
+    // priority: "",
+    // note: '',
   };
 }
 
@@ -106,13 +105,11 @@ function saveAndRender() {
   render();
 }
 
-
 function save() {
   //Local Storage Creation/Save
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
 }
-
 
 function render() {
   clearElement(listsContainer);
