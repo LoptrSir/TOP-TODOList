@@ -1,8 +1,11 @@
-// understand how this works and why: ("[data-lists]")
+//ToDo List
+
+//To Work On: break into grid so that lists and tasks can manage their own height/spacing.  Lists bullet point animation, task due date/priority/notes, 
+
+//Global Declarations
 const listsContainer = document.querySelector("[data-lists]");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
-const deleteListButton = document.querySelector("[data-delete-list-button]");
 const listDisplayContainer = document.querySelector(
   "[data-list-display-container]"
 );
@@ -12,19 +15,23 @@ const taskContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
 const newTaskForm = document.querySelector("[data-new-task-form");
 const newTaskInput = document.querySelector("[data-new-task-input");
+const deleteListButton = document.querySelector("[data-delete-list-button]");
 const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
 
-// create local storage
+// Local Storage Elements
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
 let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
 
+
+//Event Listeners
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
     selectedListId = e.target.dataset.listId;
+    //why not list.id instead of listId? see renderLists
     saveAndRender();
   }
 });
@@ -39,18 +46,6 @@ taskContainer.addEventListener("click", (e) => {
     save();
     renderTaskCount(selectedList);
   }
-});
-
-clearCompleteTasksButton.addEventListener("click", (e) => {
-  const selectedList = lists.find((list) => list.id === selectedListId);
-  selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
-  saveAndRender();
-});
-
-deleteListButton.addEventListener("click", (e) => {
-  lists = lists.filter((list) => list.id !== selectedListId);
-  selectedListId = null;
-  saveAndRender();
 });
 
 newListForm.addEventListener("submit", (e) => {
@@ -74,6 +69,19 @@ newTaskForm.addEventListener("submit", (e) => {
   saveAndRender();
 });
 
+clearCompleteTasksButton.addEventListener("click", (e) => {
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
+  saveAndRender();
+});
+
+deleteListButton.addEventListener("click", (e) => {
+  lists = lists.filter((list) => list.id !== selectedListId);
+  selectedListId = null;
+  saveAndRender();
+});
+
+//Functions
 function createList(name) {
   return {
     id: Date.now().toString(),
@@ -87,6 +95,9 @@ function createTask(name) {
     id: Date.now().toString(),
     name: name,
     complete: false,
+    //insert note 
+    //insert due date
+    //insert priority
   };
 }
 
@@ -95,13 +106,14 @@ function saveAndRender() {
   render();
 }
 
-//  Local Storage Save
+
 function save() {
+  //Local Storage Creation/Save
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
 }
 
-// Creates new iteration of My Lists with new list element
+
 function render() {
   clearElement(listsContainer);
   renderLists();
@@ -118,25 +130,11 @@ function render() {
   }
 }
 
-function renderTasks(selectedList) {
-  selectedList.tasks.forEach((task) => {
-    const taskElement = document.importNode(taskTemplate.content, true);
-    const checkbox = taskElement.querySelector("input");
-    checkbox.id = task.id;
-    checkbox.checked = task.complete;
-    const label = taskElement.querySelector("label");
-    label.htmlFor = task.id;
-    label.append(task.name);
-    taskContainer.appendChild(taskElement);
-  });
-}
-
-function renderTaskCount(selectedList) {
-  const incompleteTaskCount = selectedList.tasks.filter(
-    (task) => !task.complete
-  ).length;
-  const taskString = incompleteTaskCount === 1 ? "task" : "tasks";
-  listCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
+// clear My Lists data avoids duplication of existing items
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
 }
 
 function renderLists() {
@@ -151,11 +149,26 @@ function renderLists() {
     listsContainer.appendChild(listElement);
   });
 }
-// clears existing My Lists data to avoid duplication
-function clearElement(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
+
+function renderTaskCount(selectedList) {
+  const incompleteTaskCount = selectedList.tasks.filter(
+    (task) => !task.complete
+  ).length;
+  const taskString = incompleteTaskCount === 1 ? "task" : "tasks";
+  listCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
+}
+
+function renderTasks(selectedList) {
+  selectedList.tasks.forEach((task) => {
+    const taskElement = document.importNode(taskTemplate.content, true);
+    const checkbox = taskElement.querySelector("input");
+    checkbox.id = task.id;
+    checkbox.checked = task.complete;
+    const label = taskElement.querySelector("label");
+    label.htmlFor = task.id;
+    label.append(task.name);
+    taskContainer.appendChild(taskElement);
+  });
 }
 
 render();

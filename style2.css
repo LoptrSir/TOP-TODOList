@@ -1,8 +1,12 @@
+/* TOTO styling */
+/* delete buttons spacing seems to be linked to new task, but content window seems to have a minimum size that covers the buttons until new task is pushed low enough. form is the task 'body' */
+
+
 :root {
-    --clr-primary: rgb(54, 112, 199);
+    --clr-primary: rgb(211, 149, 240);
     --clr-light: #f4f4f4;
     --clr-dark: #333;
-    --clr-warning: rgb(99, 36, 36);
+    --clr-warning: rgb(140, 11, 247);
 }
 
 *,
@@ -49,8 +53,15 @@ body {
 
 }
 
+/* .task:hover .custom-checkbox,
+[type="checkbox"]:focus+label .custom-checkbox {
+    transform: scale(1.2);
+    color: var(--clr-primary);
+} */
+
 .list-name:hover {
     opacity: 0.7;
+    /* increase bullet point size */
 }
 
 form {
@@ -87,7 +98,7 @@ form {
 }
 
 .btn.delete:hover {
-color: var(--clr-warning);
+    color: var(--clr-warning);
 }
 
 .new {
@@ -115,23 +126,22 @@ color: var(--clr-warning);
     opacity: 0.6;
 }
 
-.new.list {
+/* .new.list {
     font-size: 1.2rem;
-}
+} */
 
 .new.task {
-    margin-bottom: 0 ;
+    margin-bottom: 0;
 }
 
 .active-list {
-    font-weight: 700;
+    font-weight: bold;
     font-size: 1.3rem;
 
 }
 
 .todo-list {
-    --spacer: 2rem;
-
+    --spacer: 1.5rem;
     grid-area: active;
     background: var(--clr-light);
     color: var(--clr-dark);
@@ -148,7 +158,6 @@ color: var(--clr-warning);
 .list-title {
     margin: 0 1em 0;
     /* maintain spacing if long task name */
-
 }
 
 .task-count {
@@ -199,6 +208,7 @@ color: var(--clr-warning);
     height: var(--size);
     margin-right: var(--size);
     cursor: pointer;
+    /* make pointer change for entire line */
     border: 2px solid currentColor;
     border-radius: 50%;
     transform: scale(1);
@@ -207,7 +217,6 @@ color: var(--clr-warning);
 
 .task:hover .custom-checkbox,
 [type="checkbox"]:focus+label .custom-checkbox {
-    /* the <[type="checkbox"]:focus + label .custom-checkbox> enables tab focus */
     transform: scale(1.2);
     color: var(--clr-primary);
 }
@@ -239,7 +248,7 @@ color: var(--clr-warning);
     transform-origin: initial;
 }
 
-.delete-stuff {
+.delete-buttons {
     display: flex;
     justify-content: space-evenly;
     position: absolute;
@@ -248,5 +257,3 @@ color: var(--clr-warning);
     bottom: -30px;
     color: var(--clr-light);
 }
-
-
