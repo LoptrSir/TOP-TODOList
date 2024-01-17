@@ -11,8 +11,7 @@
     <h1 class="title">Stuff I ought to get going on</h1>
     <div class="all-tasks">
       <h2 class="task-list-title">My Lists</h2>
-      <ul class="task-list" data-lists>
-      </ul>
+      <ul class="task-list" data-lists></ul>
       <form action="" data-new-list-form>
         <input
           type="text"
@@ -41,6 +40,15 @@
               placeholder="New Task Name"
               aria-label="New Task Name"
             />
+            <!-- after data-new... add a data attribute for identification -->
+            <input
+              type="text"
+              data-new-task-note-input
+              class="new-note"
+              placeholder="Add a Note"
+              aria-label="Add a Note"
+              style="display: none"
+            />
             <button
               class="btn create"
               id="btn-create-task"
@@ -48,14 +56,26 @@
             >
               +
             </button>
-            <button class="btn taskBtn addTaskButtons" data-task-notes-button aria-label="Note Button">
+            <button
+              class="btn task-btn"
+              data-task-notes-button
+              aria-label="Note Button"
+            >
               Note
-            </button> 
-           
-            <button class="btn taskBtn addTaskButtons" data-task-priority-button aria-label='Priority Button'>
-              priority
             </button>
-            <button class="btn taskBtn addTaskButtons" data-task-dueDate-button aria-label="Due Date Button">
+
+            <button
+              class="btn task-btn"
+              data-task-priority-button
+              aria-label="Priority Button"
+            >
+              Priority
+            </button>
+            <button
+              class="btn task-btn"
+              data-task-due-date-button
+              aria-label="Due Date Button"
+            >
               Due Date
             </button>
           </form>
@@ -72,10 +92,14 @@
     </div>
     <template id="task-template">
       <div class="task">
-        <input type="checkbox" />
-        <label>
-          <span class="custom-checkbox"></span>
-        </label>
+        <!-- class label-container added in an attempt to style the two labels. Removed as task-label in the label should do the same thing. -->
+        <!-- <div class="label-container"> -->
+          <input type="checkbox" />
+          <label class="task-label task-name-label">
+            <span class="custom-checkbox"></span>
+          </label>
+          <label class="task-label task-note-label"></label>
+        <!-- </div> -->
       </div>
     </template>
   </body>

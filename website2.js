@@ -1,6 +1,7 @@
 //ToDo List
 
 //To Work On: break into grid so that lists and tasks can manage their own height/spacing.  Lists bullet point animation, task dueDate/priority/notes functionality/styling,
+//Note functionality: not displayed if undefined, figure out spacing from task, create an edit button, display x characters, display full note on hover.
 
 //Global Declarations
 const listsContainer = document.querySelector("[data-lists]");
@@ -15,10 +16,23 @@ const taskContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
 const newTaskForm = document.querySelector("[data-new-task-form");
 const newTaskInput = document.querySelector("[data-new-task-input");
+
+
+
+const newTaskNoteButton = document.querySelector('[data-task-notes-button]');
+const newTaskNoteInput =  document.querySelector('[data-new-task-note-input]');
+const newTaskPriorityButton = document.querySelector('[data-task-priority-button]');
+
+const newTaskDueDateButton = document.querySelector('[data-task-due-date-button]');
+
+
+
 const deleteListButton = document.querySelector("[data-delete-list-button]");
 const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
+
+let taskNoteValue = '';
 
 // Local Storage Elements
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
@@ -60,13 +74,39 @@ newListForm.addEventListener("submit", (e) => {
 newTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskName = newTaskInput.value;
-  if (taskName == null || taskName == "") return;
-  const task = createTask(taskName);
+  newTaskNoteInput.style.display = 'none';
+   if (taskName == null || taskName == "") return;
+   taskNoteValue = newTaskNoteInput.value; //
+   console.log('nTF:', taskNoteValue);
+  const taskNote = taskNoteValue;
+  const task = createTask(taskName, taskNote);
   newTaskInput.value = null;
+  newTaskNoteInput.value = null;
+  taskNoteValue = '';
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
+    //Probably need to break this bloat into a new function
+
+  //console.log('newTaskForm:', taskNote); //working
+  //console.log('nTFtNV:', taskNoteValue); //working
+  //console.log('nTF, array item', selectedList); //working
+  //Note value being attached in lists
+  });
+
+newTaskNoteButton.addEventListener('focus', e => {
+  e.preventDefault();
+  newTaskNoteInput.style.display = 'block';
+    //Move curser into field upon button click
 });
+
+// newTaskNoteButton.addEventListener.apply('blur', () => {
+//   newTaskNoteInput.style.display = 'none';
+// });
+
+// newTaskPriorityButton
+
+//newTaskDueDateButton
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
   const selectedList = lists.find((list) => list.id === selectedListId);
@@ -87,18 +127,25 @@ function createList(name) {
     name: name,
     tasks: [],
   };
-}
+ }
 
-function createTask(name) {
+function createTask(name, note) {
+  // newTaskNoteInput.style.display = 'none';
   return {
     id: Date.now().toString(),
     name: name,
+    note: note || '',
     complete: false,
     // dueDate: new Date(dueDate),
     // priority: "",
-    // note: '',
+   
   };
+
+  // taskNoteValue = '';
+  // console.log('createTask', taskNoteValue);
 }
+
+function createNote() {}
 
 function saveAndRender() {
   save();
@@ -161,9 +208,12 @@ function renderTasks(selectedList) {
     const checkbox = taskElement.querySelector("input");
     checkbox.id = task.id;
     checkbox.checked = task.complete;
-    const label = taskElement.querySelector("label");
-    label.htmlFor = task.id;
-    label.append(task.name);
+    const taskNameLabel = taskElement.querySelector(".task-name-label");
+    const taskNoteLabel = taskElement.querySelector(".task-note-label");
+    taskNameLabel.htmlFor = task.id;
+    taskNoteLabel.htmlFor = task.id;
+    taskNameLabel.append(task.name);
+    taskNoteLabel.append(task.note);
     taskContainer.appendChild(taskElement);
   });
 }
