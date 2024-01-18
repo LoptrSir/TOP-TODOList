@@ -1,17 +1,19 @@
 //ToDo List
 
-//To Work On: break into grid so that lists and tasks can manage their own height/spacing.  Lists bullet point animation, task dueDate/priority/notes functionality/styling,
-//Note functionality: not displayed if undefined, figure out spacing from task, create an edit button, display x characters, display full note on hover.
+//To Work On: break into grid so that lists and tasks can manage their own height/spacing.  task dueDate/priority/notes functionality/styling,
+//Note functionality: move cursor into note field upon click, reduce size of text, create an edit/delete button, display x characters, display full note on hover. clicking on displayed note triggers checkbox check (I think that has to do with html template input type checkbox).
+//Priority: get radio buttons to display and update.
+//Task buttons to icons:
 
 //Global Declarations
 const listsContainer = document.querySelector("[data-lists]");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
-const listDisplayContainer = document.querySelector(
-  "[data-list-display-container]"
+const taskDisplayContainer = document.querySelector(
+  "[data-task-display-container]"
 );
 const listTitleElement = document.querySelector("[data-list-title");
-const listCountElement = document.querySelector("[data-list-count]");
+const taskCountElement = document.querySelector("[data-task-count]");
 const taskContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
 const newTaskForm = document.querySelector("[data-new-task-form");
@@ -19,12 +21,14 @@ const newTaskInput = document.querySelector("[data-new-task-input");
 
 
 
-const newTaskNoteButton = document.querySelector('[data-task-notes-button]');
-const newTaskNoteInput =  document.querySelector('[data-new-task-note-input]');
-const newTaskPriorityButton = document.querySelector('[data-task-priority-button]');
+const taskNoteButton = document.querySelector('[data-task-notes-button]');
+const taskNoteInput =  document.querySelector('[data-task-note-input]');
 
-const newTaskDueDateButton = document.querySelector('[data-task-due-date-button]');
-
+const taskPriorityButton = document.querySelector('[data-task-priority-button]');
+const taskPriorityInput = document.querySelector('[data-task-priority-input]');
+//const taskPriorityOptions = document.querySelector('.task-priority-options');
+const taskDueDateButton = document.querySelector('[data-task-due-date-button]');
+const taskDueDateInput = document.querySelector('[data-task-due-date-input]')
 
 
 const deleteListButton = document.querySelector("[data-delete-list-button]");
@@ -74,39 +78,40 @@ newListForm.addEventListener("submit", (e) => {
 newTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskName = newTaskInput.value;
-  newTaskNoteInput.style.display = 'none';
-   if (taskName == null || taskName == "") return;
-   taskNoteValue = newTaskNoteInput.value; //
-   console.log('nTF:', taskNoteValue);
+  taskNoteInput.style.display = 'none';
+  if (taskName == null || taskName == "") return;
+  taskNoteValue = taskNoteInput.value; 
+  console.log('nTF:', taskNoteValue);
   const taskNote = taskNoteValue;
+  // let selectedPriority = '';
+  // selectPriority();
   const task = createTask(taskName, taskNote);
+  // const task = createTask(taskName, taskNote, selectedPriority);
   newTaskInput.value = null;
-  newTaskNoteInput.value = null;
+  taskNoteInput.value = null;
   taskNoteValue = '';
+  //selectedPriority = '';
+
+  // Can taskNoteValue and taskNoteInput.value be combined?
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
-    //Probably need to break this bloat into a new function
-
-  //console.log('newTaskForm:', taskNote); //working
-  //console.log('nTFtNV:', taskNoteValue); //working
-  //console.log('nTF, array item', selectedList); //working
-  //Note value being attached in lists
+    //Probably need to break this bloat into a couple functions
   });
 
-newTaskNoteButton.addEventListener('focus', e => {
+taskNoteButton.addEventListener('click', e => {
   e.preventDefault();
-  newTaskNoteInput.style.display = 'block';
+  taskNoteInput.style.display = 'block';
     //Move curser into field upon button click
 });
 
-// newTaskNoteButton.addEventListener.apply('blur', () => {
-//   newTaskNoteInput.style.display = 'none';
-// });
+// taskPriorityButton.addEventListener('click', (e) => {
+//   e.preventDefault();
+//   taskPriorityInput.style.display = 'block';
+// })
 
-// newTaskPriorityButton
 
-//newTaskDueDateButton
+//taskDueDateButton
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
   const selectedList = lists.find((list) => list.id === selectedListId);
@@ -130,22 +135,31 @@ function createList(name) {
  }
 
 function createTask(name, note) {
-  // newTaskNoteInput.style.display = 'none';
-  return {
+// function createTask(name, note, priority) {
+    return {
     id: Date.now().toString(),
     name: name,
     note: note || '',
-    complete: false,
-    // dueDate: new Date(dueDate),
     // priority: "",
+    complete: false,
+        // dueDate: new Date(dueDate),
+   
    
   };
-
-  // taskNoteValue = '';
-  // console.log('createTask', taskNoteValue);
 }
 
 function createNote() {}
+
+// function selectPriority() {
+//   let selectedPriority = '';
+
+//   taskPriorityInput.forEach((input) => {
+//     if (input.check) {
+//       selectedPriority = input.value;
+//     }
+//   })
+//   return selectedPriority;
+// }
 
 function saveAndRender() {
   save();
@@ -164,9 +178,9 @@ function render() {
 
   const selectedList = lists.find((list) => list.id === selectedListId);
   if (selectedListId == null) {
-    listDisplayContainer.style.display = "none";
+    taskDisplayContainer.style.display = "none";
   } else {
-    listDisplayContainer.style.display = "";
+    taskDisplayContainer.style.display = "";
     listTitleElement.innerText = selectedList.name;
     renderTaskCount(selectedList);
     clearElement(taskContainer);
@@ -199,7 +213,7 @@ function renderTaskCount(selectedList) {
     (task) => !task.complete
   ).length;
   const taskString = incompleteTaskCount === 1 ? "task" : "tasks";
-  listCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
+  taskCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
 }
 
 function renderTasks(selectedList) {

@@ -9,9 +9,9 @@
   </head>
   <body>
     <h1 class="title">Stuff I ought to get going on</h1>
-    <div class="all-tasks">
-      <h2 class="task-list-title">My Lists</h2>
-      <ul class="task-list" data-lists></ul>
+    <div class="all-lists">
+      <h2 class="master-list-title">My Lists</h2>
+      <ul class="master-list" data-lists></ul>
       <form action="" data-new-list-form>
         <input
           type="text"
@@ -24,12 +24,12 @@
       </form>
     </div>
 
-    <div class="todo-list" data-list-display-container>
-      <div class="todo-header">
+    <div class="task-list" data-task-display-container>
+      <div class="task-header">
         <h2 class="list-title" data-list-title></h2>
-        <p class="task-count" data-list-count></p>
+        <p class="task-count" data-task-count></p>
       </div>
-      <div class="todo-body">
+      <div class="task-body">
         <div class="tasks" data-tasks></div>
         <div class="new-task-creator">
           <form action="" data-new-task-form>
@@ -40,15 +40,7 @@
               placeholder="New Task Name"
               aria-label="New Task Name"
             />
-            <!-- after data-new... add a data attribute for identification -->
-            <input
-              type="text"
-              data-new-task-note-input
-              class="new-note"
-              placeholder="Add a Note"
-              aria-label="Add a Note"
-              style="display: none"
-            />
+          
             <button
               class="btn create"
               id="btn-create-task"
@@ -64,6 +56,15 @@
               Note
             </button>
 
+            <input
+            type="text"
+            data-task-note-input
+            class="task-note"
+            placeholder="Add a Note"
+            aria-label="Add a Note"
+            style="display: none"
+          />
+
             <button
               class="btn task-btn"
               data-task-priority-button
@@ -71,13 +72,68 @@
             >
               Priority
             </button>
+              <!-- is this input needed? the template gives the options -->
+            <!-- <input
+            type="text"
+            data-task-priority-input
+            class="task-priority"
+            placeholder="Task Priority"
+            aria-label="Task Priority"
+            style="display: none"
+          /> -->
+
+
+          <!-- Likely to use these radioButtons -->
+          <!-- <label>
+            <input
+              type="radio"
+              name="priority"
+              value="high"
+              data-task-priority-input
+              class="new-task-priority"
+              style="display: none"
+            />
+            High Priority
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="priority"
+              value="medium"
+              data-task-priority-input
+              class="new-task-priority"
+              style="display: none"
+            />
+            Medium Priority
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="priority"
+              value="low"
+              data-task-priority-input
+              class="new-task-priority"
+              style="display: none"
+            />
+            Low Priority
+          </label>
+
             <button
               class="btn task-btn"
               data-task-due-date-button
               aria-label="Due Date Button"
             >
               Due Date
-            </button>
+            </button> -->
+
+            <input
+            type="text"
+            data-task-due-date-input
+            class="task-due-date"
+            placeholder="Due Date"
+            aria-label="Due Date"
+            style="display: none"
+          />
           </form>
         </div>
         <div class="delete-buttons">
@@ -91,15 +147,28 @@
       </div>
     </div>
     <template id="task-template">
-      <div class="task">
-        <!-- class label-container added in an attempt to style the two labels. Removed as task-label in the label should do the same thing. -->
-        <!-- <div class="label-container"> -->
-          <input type="checkbox" />
-          <label class="task-label task-name-label">
-            <span class="custom-checkbox"></span>
+      <div class="task"> 
+                <input type="checkbox" />
+        <label class="task-label task-name-label">
+          <span class="custom-checkbox"></span>
+        </label>
+        <!-- would putting this labe in its own div address the note checkbox issue? -->
+        <label class="task-label task-note-label"></label>
+
+        <!-- working to display task priority -->
+        <!-- <div class="task-priority-options" style="display: none;">
+          <label>
+            <input type="checkbox" value="high">High
           </label>
-          <label class="task-label task-note-label"></label>
-        <!-- </div> -->
+          <label>
+            <input type="checkbox" value="medium">Medium
+          </label>
+          <label>
+            <input type="checkbox" value="low">Low
+          </label>        
+        </div> -->
+
+
       </div>
     </template>
   </body>

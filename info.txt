@@ -1,5 +1,6 @@
 TOP project: TODO List 
 
+1/18 1551 Note field space between functions. Need to make sure clicking on note does not trigger chekbox::checked.  Started on Priority logic.
 1/17 1522 Note field displays upon note click, upon submit new task field goes away and task displays note.
 1/16 1359 add Note, Priority, DueDate buttons to task. Need to work on underlying functionality.
 1241 Working on making code mine.
