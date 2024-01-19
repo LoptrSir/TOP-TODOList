@@ -40,7 +40,7 @@
               placeholder="New Task Name"
               aria-label="New Task Name"
             />
-          
+
             <button
               class="btn create"
               id="btn-create-task"
@@ -57,13 +57,13 @@
             </button>
 
             <input
-            type="text"
-            data-task-note-input
-            class="task-note"
-            placeholder="Add a Note"
-            aria-label="Add a Note"
-            style="display: none"
-          />
+              type="text"
+              data-task-note-input
+              class="task-note"
+              placeholder="Add a Note"
+              aria-label="Add a Note"
+              style="display: none"
+            />
 
             <button
               class="btn task-btn"
@@ -72,51 +72,42 @@
             >
               Priority
             </button>
-              <!-- is this input needed? the template gives the options -->
-            <!-- <input
-            type="text"
-            data-task-priority-input
-            class="task-priority"
-            placeholder="Task Priority"
-            aria-label="Task Priority"
-            style="display: none"
-          /> -->
 
 
-          <!-- Likely to use these radioButtons -->
-          <!-- <label>
-            <input
-              type="radio"
-              name="priority"
-              value="high"
-              data-task-priority-input
-              class="new-task-priority"
-              style="display: none"
-            />
-            High Priority
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="priority"
-              value="medium"
-              data-task-priority-input
-              class="new-task-priority"
-              style="display: none"
-            />
-            Medium Priority
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="priority"
-              value="low"
-              data-task-priority-input
-              class="new-task-priority"
-              style="display: none"
-            />
-            Low Priority
-          </label>
+              <!-- wrapping in this div made all options visible -->
+            <div class="task-priority-options" style="display: none;">
+              <label data-task-priority-display>
+                <input
+                  type="radio"
+                  value="high"
+                  name="high"
+                  data-task-priority-input
+                  class="new-task-priority"
+                />
+                High
+              </label>
+              <label data-task-priority-display>
+                <input
+                  type="radio"
+                  value="medium"
+                  name="medium"
+                  data-task-priority-input
+                  class="new-task-priority"
+                />
+                Medium
+              </label>
+              <label data-task-priority-display>
+                <input
+                  type="radio"
+                  value="low"
+                  name="low"
+                  data-task-priority-input
+                  class="new-task-priority"
+                />
+                Low
+              </label>
+            </div>
+
 
             <button
               class="btn task-btn"
@@ -124,16 +115,16 @@
               aria-label="Due Date Button"
             >
               Due Date
-            </button> -->
+            </button>
 
             <input
-            type="text"
-            data-task-due-date-input
-            class="task-due-date"
-            placeholder="Due Date"
-            aria-label="Due Date"
-            style="display: none"
-          />
+              type="text"
+              data-task-due-date-input
+              class="task-due-date"
+              placeholder="Due Date"
+              aria-label="Due Date"
+              style="display: none"
+            />
           </form>
         </div>
         <div class="delete-buttons">
@@ -147,28 +138,15 @@
       </div>
     </div>
     <template id="task-template">
-      <div class="task"> 
-                <input type="checkbox" />
+      <div class="task">
+        <input type="checkbox" />
         <label class="task-label task-name-label">
           <span class="custom-checkbox"></span>
         </label>
         <!-- would putting this labe in its own div address the note checkbox issue? -->
         <label class="task-label task-note-label"></label>
 
-        <!-- working to display task priority -->
-        <!-- <div class="task-priority-options" style="display: none;">
-          <label>
-            <input type="checkbox" value="high">High
-          </label>
-          <label>
-            <input type="checkbox" value="medium">Medium
-          </label>
-          <label>
-            <input type="checkbox" value="low">Low
-          </label>        
-        </div> -->
-
-
+        <label class="task-label task-priority-label"></label>
       </div>
     </template>
   </body>

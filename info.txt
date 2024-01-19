@@ -1,5 +1,7 @@
 TOP project: TODO List 
 
+1/19 1519 working on Note styling. got it to align better using flex:1 on task-name and task-note, Note no longer centering with alig-items/align-self.
+1407 New Task Name Priority button works and displays 'hih' and clears the button field.  However, it always defaults to high.  Looks like there is a need to do some sort of loop/filter for checked.
 1/18 1551 Note field space between functions. Need to make sure clicking on note does not trigger chekbox::checked.  Started on Priority logic.
 1/17 1522 Note field displays upon note click, upon submit new task field goes away and task displays note.
 1/16 1359 add Note, Priority, DueDate buttons to task. Need to work on underlying functionality.

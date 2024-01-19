@@ -1,4 +1,4 @@
-/* TOTO styling */
+/* TODO styling */
 /* delete buttons spacing seems to be linked to new task, but content window seems to have a minimum size that covers the buttons until new task is pushed low enough. form is the task 'body' */
 
 
@@ -182,31 +182,43 @@ form {
     position: relative;
 }
 
-[type='checkbox'] {
-    opacity: 0;
-    position: absolute;
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* position: relative; */
 }
 
 /* .task label { */
 .task-name-label {
-    display: inline-flex;
+    /* display: inline-flex; */
+    /* display: flex; */
     align-items: center;
-    position: relative;
+    /* position: relative;  */
     cursor: pointer;
-    /* underline task*/
-    /*margin-bottom: 1.25em; */
-    /* use margin below if not using underline task */
     margin-bottom: .15em;
-}
-
-.task {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
+    flex:1;  
+    /* using flex seems to allow me to control text-note spacing. */
 }
 
 .task-note-label {
+    /* display: inline-flex; */
+    /* centers text top to bottom */
+    /* align-items: center; */
+    /* justify-content: start; */
+    /* position: relative; */
+    /* right: 5%; */
+    /* flex-grow: 1; */
+    /* align-self: center; */
+    flex: 1;
+    flex-basis: 40%;
     color: purple;
+    font-size: .6em;
+}
+
+[type='checkbox'] {
+    opacity: 0;
+    position: absolute;
 }
 
 .custom-checkbox {
@@ -225,10 +237,6 @@ form {
 /* .task:hover .custom-checkbox, 
 [type="checkbox"]:focus+label .custom-checkbox { */
 /* changing from the above prevents note affecting task on hover*/
-
-/* makes checkbox change color and grow */
-/* .task-name-label:hover .custom-checkbox, [type="checkbox"]:focus+.task-name-label .custom-checkbox { */
-/* .task-name-label:hover .custom-checkbox, [type="checkbox"]:focus .custom-checkbox { */
 .task-name-label:hover .custom-checkbox {
     transform: scale(1.2);
     color: var(--clr-primary);
@@ -247,7 +255,6 @@ form {
 }
 
 /* .task label::after { */
-/* .task::after { */
 .task-name-label::after {
     content: '';
     position: absolute;
@@ -261,7 +268,6 @@ form {
 }
 
 /* [type='checkbox']:checked+label::after { */
-/* Not Positive if there is a difference between these two */
 [type='checkbox']:checked+.task-name-label::after {
     transform: scaleX(1);
     transform-origin: initial;
@@ -271,16 +277,7 @@ form {
     /* what does this do? */
     content: '';
     position: absolute;
-    /* underline task */
-    /* left: 0;
-    right: 0;
-    bottom: -.5em;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.2; */
 }
-
-
 
 .delete-buttons {
     display: flex;
