@@ -216,6 +216,11 @@ form {
     font-size: .6em;
 }
 
+.task-priority-label {
+    color: green;
+    font-size: .6em;
+}
+
 [type='checkbox'] {
     opacity: 0;
     position: absolute;

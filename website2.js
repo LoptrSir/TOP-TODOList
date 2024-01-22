@@ -3,7 +3,7 @@
 //To Work On: break into grid so that lists and tasks can manage their own height/spacing.  task dueDate/priority/notes functionality/styling,
 //Note functionality: move cursor into note field upon click, reduce size of text, create an edit/delete button, display x characters, display full note on hover. clicking on displayed note triggers checkbox check (I think that has to do with html template input type checkbox).
 //Priority: radio button working and displaying, however: it always displays high.  Do i need some kind of if/forEach/loop to verify checked?
-//Calendar: 
+//Calendar:
 //Task buttons to icons:
 
 //Global Declarations
@@ -26,8 +26,10 @@ const taskNoteInput = document.querySelector("[data-task-note-input]");
 const taskPriorityButton = document.querySelector(
   "[data-task-priority-button]"
 );
-// const taskPriorityInput = document.querySelector("input[data-task-priority-input]:checked");
-const taskPriorityInput = document.querySelector("[data-task-priority-input]");
+const taskPriorityInput = document.querySelector(
+  "input[data-task-priority-input]:checked"
+);
+// const taskPriorityInput = document.querySelector("[data-task-priority-input]");
 //const taskPriorityLabel = document.querySelector('.task-priority-label');
 // const taskPriorityDisplay = document.querySelector(  "[data-task-priority-display]");
 const taskPriorityOptions = document.querySelector(".task-priority-options");
@@ -41,7 +43,7 @@ const clearCompleteTasksButton = document.querySelector(
 );
 
 let taskNoteValue = "";
-let selectedPriority = '';
+let selectedPriority = "";
 
 // Local Storage Elements
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
@@ -53,7 +55,7 @@ let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
     selectedListId = e.target.dataset.listId;
-     saveAndRender();
+    saveAndRender();
   }
 });
 
@@ -88,9 +90,12 @@ newTaskForm.addEventListener("submit", (e) => {
   taskNoteValue = taskNoteInput.value;
   console.log("nTF:", taskNoteValue);
   const taskNote = taskNoteValue;
-  const taskPriority = taskPriorityInput.value;
-// const taskPriority = selectedPriority;
-    console.log("nTFpriority:", taskPriority);
+  //const taskPriority = taskPriorityInput.value;
+  // console.log("nTFpriority:", taskPriority);
+  const taskPriority = selectedPriority;
+  // selectPriority();
+
+  console.log("nTFpriority:", taskPriority);
 
   // const task = createTask(taskName, taskNote);
   const task = createTask(taskName, taskNote, taskPriority);
@@ -98,8 +103,9 @@ newTaskForm.addEventListener("submit", (e) => {
   newTaskInput.value = null;
   taskNoteInput.value = null;
   taskNoteValue = "";
-  taskPriorityInput.value = null;
-  //selectedPriority = '';
+  // taskPriorityInput.value = null;
+  selectedPriority = "";
+  console.log("nTF selectedPriorityCleared:", selectedPriority);
 
   // Can taskNoteValue and taskNoteInput.value be combined?
   const selectedList = lists.find((list) => list.id === selectedListId);
@@ -118,9 +124,15 @@ taskNoteButton.addEventListener("click", (e) => {
 taskPriorityButton.addEventListener("click", (e) => {
   e.preventDefault();
   taskPriorityOptions.style.display = "block";
-//selectPriority()
- });
+  // selectPriority()
+});
 
+taskPriorityOptions.addEventListener('change', (e) => {
+  if (e.target.type === 'radio' && e.target.checked) {
+    selectedPriority = e.target.value;
+    console.log('taskPriorityOptions:', selectedPriority);
+  }
+})
 //taskDueDateButton
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
@@ -159,7 +171,14 @@ function createTask(name, note, priority) {
 //function createNote() {}
 
 // function selectPriority() {
-//   need to figure out how to determine which button is checked and update that as the correct choice instead of the default to high.
+  // need to figure out how to determine which button is checked and update that as the correct choice instead of the default to high.
+  
+  // if (taskPriorityInput) {
+  //   selectedPriority = taskPriorityInput.value;
+  //   console.log("selectPriority:", selectedPriority);
+  // } else {
+  //   console.log("selectPriority;", "No selection made");
+  // }
 // }
 
 function saveAndRender() {
