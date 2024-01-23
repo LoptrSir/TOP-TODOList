@@ -2,7 +2,7 @@
 
 //To Work On: break into grid so that lists and tasks can manage their own height/spacing.  task dueDate/priority/notes functionality/styling,
 //Note functionality: move cursor into note field upon click, reduce size of text, create an edit/delete button, display x characters, display full note on hover. clicking on displayed note triggers checkbox check (I think that has to do with html template input type checkbox).
-//Priority: radio button working and displaying, however: it always displays high.  Do i need some kind of if/forEach/loop to verify checked?
+//Priority: radio button working and displaying, however: it always displays high.  Do i need some kind of if/forEach/loop to verify checked? why is this needed?  <label data-task-priority-display> priority wont display without it.
 //Calendar:
 //Task buttons to icons:
 
@@ -19,16 +19,15 @@ const taskContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
 const newTaskForm = document.querySelector("[data-new-task-form");
 const newTaskInput = document.querySelector("[data-new-task-input");
-
 const taskNoteButton = document.querySelector("[data-task-notes-button]");
 const taskNoteInput = document.querySelector("[data-task-note-input]");
 
 const taskPriorityButton = document.querySelector(
   "[data-task-priority-button]"
 );
-const taskPriorityInput = document.querySelector(
-  "input[data-task-priority-input]:checked"
-);
+// const taskPriorityInput = document.querySelector(
+//   "input[data-task-priority-input]:checked"
+// );
 // const taskPriorityInput = document.querySelector("[data-task-priority-input]");
 //const taskPriorityLabel = document.querySelector('.task-priority-label');
 // const taskPriorityDisplay = document.querySelector(  "[data-task-priority-display]");
@@ -87,32 +86,22 @@ newTaskForm.addEventListener("submit", (e) => {
   taskNoteInput.style.display = "none";
   taskPriorityOptions.style.display = "none";
   if (taskName == null || taskName == "") return;
-  taskNoteValue = taskNoteInput.value;
-  console.log("nTF:", taskNoteValue);
-  const taskNote = taskNoteValue;
-  //const taskPriority = taskPriorityInput.value;
-  // console.log("nTFpriority:", taskPriority);
-  const taskPriority = selectedPriority;
-  // selectPriority();
-
+  const taskNote = taskNoteInput.value;
+  const taskPriority = taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value || "";
   console.log("nTFpriority:", taskPriority);
-
-  // const task = createTask(taskName, taskNote);
   const task = createTask(taskName, taskNote, taskPriority);
-
   newTaskInput.value = null;
   taskNoteInput.value = null;
-  taskNoteValue = "";
-  // taskPriorityInput.value = null;
-  selectedPriority = "";
-  console.log("nTF selectedPriorityCleared:", selectedPriority);
-
-  // Can taskNoteValue and taskNoteInput.value be combined?
+  const radioButtons = taskPriorityOptions.querySelectorAll('input[type="radio"]');
+  radioButtons.forEach((radioButton) => {
+    radioButton.checked = false;
+  });
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
   console.log("nTF, array item", selectedList);
-  //Probably need to break this bloat into a couple functions
+
+  //Probably need to break this bloat into a couple functions: radioButtonReset, 
 });
 
 taskNoteButton.addEventListener("click", (e) => {
@@ -127,12 +116,18 @@ taskPriorityButton.addEventListener("click", (e) => {
   // selectPriority()
 });
 
-taskPriorityOptions.addEventListener('change', (e) => {
-  if (e.target.type === 'radio' && e.target.checked) {
+taskPriorityOptions.addEventListener("change", (e) => {
+  if (e.target.type === "radio" && e.target.checked) {
     selectedPriority = e.target.value;
-    console.log('taskPriorityOptions:', selectedPriority);
+    console.log("taskPriorityOptions:", selectedPriority);
+    const radioButtons = taskPriorityOptions.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach((radioButton) => {
+      if (radioButton !== e.target) {
+        radioButton.checked = false;
+      }
+    })
   }
-})
+});
 //taskDueDateButton
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
@@ -156,7 +151,6 @@ function createList(name) {
   };
 }
 
-// function createTask(name, note) {
 function createTask(name, note, priority) {
   return {
     id: Date.now().toString(),
@@ -170,24 +164,13 @@ function createTask(name, note, priority) {
 
 //function createNote() {}
 
-// function selectPriority() {
-  // need to figure out how to determine which button is checked and update that as the correct choice instead of the default to high.
-  
-  // if (taskPriorityInput) {
-  //   selectedPriority = taskPriorityInput.value;
-  //   console.log("selectPriority:", selectedPriority);
-  // } else {
-  //   console.log("selectPriority;", "No selection made");
-  // }
-// }
-
 function saveAndRender() {
   save();
   render();
 }
 
+//Local Storage Creation/Save
 function save() {
-  //Local Storage Creation/Save
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
 }
@@ -195,7 +178,6 @@ function save() {
 function render() {
   clearElement(listsContainer);
   renderLists();
-
   const selectedList = lists.find((list) => list.id === selectedListId);
   if (selectedListId == null) {
     taskDisplayContainer.style.display = "none";
