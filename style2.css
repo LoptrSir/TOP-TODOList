@@ -184,40 +184,70 @@ form {
 
 .task {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+    /* align-items: center; */
     /* position: relative; */
 }
 
+/* .task-label {
+    position:absolute;
+} */
+
 /* .task label { */
 .task-name-label {
-    /* display: inline-flex; */
+    display: inline-flex;
     /* display: flex; */
     align-items: center;
     /* position: relative;  */
+    /* left: 0; */
     cursor: pointer;
     margin-bottom: .15em;
-    flex:1;  
+    /* flex:1;   */
+    margin-right: auto;
     /* using flex seems to allow me to control text-note spacing. */
 }
 
 .task-note-label {
     /* display: inline-flex; */
+    /* display: flex; */
     /* centers text top to bottom */
     /* align-items: center; */
     /* justify-content: start; */
     /* position: relative; */
-    /* right: 5%; */
+    /* left: 15%; */
     /* flex-grow: 1; */
     /* align-self: center; */
-    flex: 1;
-    flex-basis: 40%;
+    /* align-items: center; */
+    /* flex: 1; */
+    flex: 0 0 35%;
+    /* margin-left: 10%; */
+    /* margin-right: 10px; */
+    /* flex-basis: 70%; */
     color: purple;
     font-size: .6em;
 }
 
 .task-priority-label {
+    /* flex:1; */
+    /* flex-basis: 1%; */
+    /* align-items: center; */
+    flex: 0 0 10%;
+    /* margin-left: 20%; */
+    /* position: relative; */
+    /* left: 25%; */
+    /* margin-right: 10px; */
     color: green;
+    font-size: .6em;
+}
+
+.task-due-date-label {
+    /* flex: 1; */
+    /* flex-basis: 1%; */
+    /* position: relative; */
+    /* left: 45%; */
+    flex: 0 0 20%;
+    /* margin-left: 35%; */
+    color: brown;
     font-size: .6em;
 }
 

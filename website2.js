@@ -1,9 +1,10 @@
 //ToDo List
 
-//To Work On: break into grid so that lists and tasks can manage their own height/spacing.  task dueDate/priority/notes functionality/styling,
-//Note functionality: move cursor into note field upon click, reduce size of text, create an edit/delete button, display x characters, display full note on hover. clicking on displayed note triggers checkbox check (I think that has to do with html template input type checkbox).
-//Priority: radio button working and displaying, however: it always displays high.  Do i need some kind of if/forEach/loop to verify checked? why is this needed?  <label data-task-priority-display> priority wont display without it.
-//Calendar:
+//To Work On: break into grid so that lists and tasks can manage their own height/spacing. Clicking anywhere on the .tasks row marks item done, limit this to just the task name. Make sure this looks proper for all different screen sizes.
+//.task-list: How to make .tasks spacing conform to the space of .task-list not the full page.  This seems important for change to screen size view.
+//Note functionality: move cursor into note input field upon click, create an edit/delete button upon hover, display x characters, display full note on hover inside popup window. 
+//Priority: radio button options, break into a popup window with the cursor inside the field. Color priority based on option selected.   
+//Calendar: logic to convert input string to a date with two year display, add option to use a calendar. Hover over task dueDate allows change? Get dueDate displaying margin-right.
 //Task buttons to icons:
 
 //Global Declarations
@@ -21,16 +22,9 @@ const newTaskForm = document.querySelector("[data-new-task-form");
 const newTaskInput = document.querySelector("[data-new-task-input");
 const taskNoteButton = document.querySelector("[data-task-notes-button]");
 const taskNoteInput = document.querySelector("[data-task-note-input]");
-
 const taskPriorityButton = document.querySelector(
   "[data-task-priority-button]"
 );
-// const taskPriorityInput = document.querySelector(
-//   "input[data-task-priority-input]:checked"
-// );
-// const taskPriorityInput = document.querySelector("[data-task-priority-input]");
-//const taskPriorityLabel = document.querySelector('.task-priority-label');
-// const taskPriorityDisplay = document.querySelector(  "[data-task-priority-display]");
 const taskPriorityOptions = document.querySelector(".task-priority-options");
 
 const taskDueDateButton = document.querySelector("[data-task-due-date-button]");
@@ -42,7 +36,7 @@ const clearCompleteTasksButton = document.querySelector(
 );
 
 let taskNoteValue = "";
-let selectedPriority = "";
+// let selectedPriority = "";
 
 // Local Storage Elements
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
@@ -85,23 +79,35 @@ newTaskForm.addEventListener("submit", (e) => {
   const taskName = newTaskInput.value;
   taskNoteInput.style.display = "none";
   taskPriorityOptions.style.display = "none";
+  taskDueDateInput.style.display = "none";
   if (taskName == null || taskName == "") return;
   const taskNote = taskNoteInput.value;
-  const taskPriority = taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value || "";
-  console.log("nTFpriority:", taskPriority);
-  const task = createTask(taskName, taskNote, taskPriority);
+  const taskPriority =
+    taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value ||
+    "";
+  // console.log("nTFpriority:", taskPriority);
+
+  const dueDate = taskDueDateInput.value;
+
+  // const task = createTask(taskName, taskNote, taskPriority);
+  const task = createTask(taskName, taskNote, taskPriority, dueDate);
   newTaskInput.value = null;
   taskNoteInput.value = null;
-  const radioButtons = taskPriorityOptions.querySelectorAll('input[type="radio"]');
+  const radioButtons = taskPriorityOptions.querySelectorAll(
+    'input[type="radio"]'
+  );
   radioButtons.forEach((radioButton) => {
     radioButton.checked = false;
   });
+
+  taskDueDateInput.value = null;
+
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
   console.log("nTF, array item", selectedList);
 
-  //Probably need to break this bloat into a couple functions: radioButtonReset, 
+  //Probably need to break this bloat into a couple functions: radioButtonReset,
 });
 
 taskNoteButton.addEventListener("click", (e) => {
@@ -118,17 +124,21 @@ taskPriorityButton.addEventListener("click", (e) => {
 
 taskPriorityOptions.addEventListener("change", (e) => {
   if (e.target.type === "radio" && e.target.checked) {
-    selectedPriority = e.target.value;
-    console.log("taskPriorityOptions:", selectedPriority);
-    const radioButtons = taskPriorityOptions.querySelectorAll('input[type="radio"]');
+    const radioButtons = taskPriorityOptions.querySelectorAll(
+      'input[type="radio"]'
+    );
     radioButtons.forEach((radioButton) => {
       if (radioButton !== e.target) {
         radioButton.checked = false;
       }
-    })
+    });
   }
 });
-//taskDueDateButton
+
+taskDueDateButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  taskDueDateInput.style.display = "block";
+});
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
   const selectedList = lists.find((list) => list.id === selectedListId);
@@ -151,15 +161,18 @@ function createList(name) {
   };
 }
 
-function createTask(name, note, priority) {
+// function createTask(name, note, priority) {
+function createTask(name, note, priority, dueDate) {
   return {
     id: Date.now().toString(),
     name: name,
     note: note || "",
     priority: priority || "",
+    dueDate: dueDate || "",
     // dueDate: new Date(dueDate) || '',
     complete: false,
   };
+  const selectedPriority = e.target.value;
 }
 
 //function createNote() {}
@@ -221,18 +234,23 @@ function renderTaskCount(selectedList) {
 function renderTasks(selectedList) {
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
+    console.log("rTask,taskTemplate:", taskTemplate.content);
     const checkbox = taskElement.querySelector("input");
     checkbox.id = task.id;
     checkbox.checked = task.complete;
     const taskNameLabel = taskElement.querySelector(".task-name-label");
     const taskNoteLabel = taskElement.querySelector(".task-note-label");
     const taskPriorityLabel = taskElement.querySelector(".task-priority-label");
+    const taskDueDateLabel = taskElement.querySelector(".task-due-date-label");
     taskNameLabel.htmlFor = task.id;
     taskNoteLabel.htmlFor = task.id;
     taskPriorityLabel.htmlFor = task.id;
+    console.log("renderTask, taskElement:", taskElement);
+    taskDueDateLabel.htmlFor = task.id;
     taskNameLabel.append(task.name);
     taskNoteLabel.append(task.note);
     taskPriorityLabel.append(task.priority);
+    taskDueDateLabel.append(task.dueDate);
     taskContainer.appendChild(taskElement);
   });
 }

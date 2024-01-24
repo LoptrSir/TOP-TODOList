@@ -55,7 +55,6 @@
             >
               Note
             </button>
-
             <input
               type="text"
               data-task-note-input
@@ -72,9 +71,6 @@
             >
               Priority
             </button>
-
-
-              <!-- wrapping in this div made all options visible -->
             <div class="task-priority-options" style="display: none;">
               <label data-task-priority-display>
                 <input
@@ -88,8 +84,8 @@
               <label data-task-priority-display>
                 <input
                   type="radio"
-                  value="medium"
-                  name="medium"
+                  value="med"
+                  name="med"
                   class="new-task-priority"
                 />
                 Medium
@@ -104,6 +100,7 @@
                 Low
               </label>
             </div>
+
 
 
             <button
@@ -122,6 +119,9 @@
               aria-label="Due Date"
               style="display: none"
             />
+
+
+            
           </form>
         </div>
         <div class="delete-buttons">
@@ -144,6 +144,7 @@
         <label class="task-label task-note-label"></label>
 
         <label class="task-label task-priority-label"></label>
+        <label class="task-label task-due-date-label"></label>
       </div>
     </template>
   </body>
