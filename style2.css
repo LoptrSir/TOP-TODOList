@@ -1,6 +1,4 @@
 /* TODO styling */
-/* delete buttons spacing seems to be linked to new task, but content window seems to have a minimum size that covers the buttons until new task is pushed low enough. form is the task 'body' */
-
 
 :root {
     --clr-primary: rgb(211, 149, 240);
@@ -59,6 +57,7 @@ li {
 }
 
 li::before {
+    /* makes the bullet point the specific one displayed */
     content: '\2022';
     display: inline-block;
 }
@@ -94,9 +93,20 @@ form {
     color: var(--clr-primary);
 }
 
+.task-body form{
+    display: flex;
+    justify-content: space-between;   
+}
+
 .task-btn {
+    display: flex;
+    align-items: center;
+    /* position: relative; */
+    /* justify-content: space-between; */
     order: 3;
+    /* margin-left: 0.1em; */
     margin: .25em .25em .25em .25em;
+    /* justify-content: end; */
 }
 
 .btn:hover {
@@ -122,7 +132,7 @@ form {
     border: 0;
     color: inherit;
     border-bottom: 1px solid currentColor;
-    font-size: inherit;
+    font-size: 1rem;
     transition: border-bottom 150ms ease-in;
     outline: none;
     padding: .25em;
@@ -143,6 +153,7 @@ form {
 }
 
 .new.task {
+    width: 50%;
     margin-bottom: 0;
 }
 
@@ -182,7 +193,7 @@ form {
     position: relative;
 }
 
-.task {
+.task-temp {
     display: flex;
     /* justify-content: space-between; */
     /* align-items: center; */
@@ -195,16 +206,22 @@ form {
 
 /* .task label { */
 .task-name-label {
-    display: inline-flex;
-    /* display: flex; */
-    align-items: center;
-    /* position: relative;  */
+    position: relative; 
+    /* position: absolute; */
     /* left: 0; */
+    /* flex:1;   */
+    
+    /* display: inline-flex; */
+    align-items: center;
     cursor: pointer;
     margin-bottom: .15em;
-    /* flex:1;   */
     margin-right: auto;
-    /* using flex seems to allow me to control text-note spacing. */
+
+    display: flex;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipses;
+    max-width: calc(100% - 100px);
 }
 
 .task-note-label {
@@ -219,34 +236,44 @@ form {
     /* align-self: center; */
     /* align-items: center; */
     /* flex: 1; */
-    flex: 0 0 35%;
     /* margin-left: 10%; */
     /* margin-right: 10px; */
     /* flex-basis: 70%; */
+
+    flex: 0 0 35%;
     color: purple;
     font-size: .6em;
+
+    /* flex-grow: 1; */
+    /* flex-shrink: 1; */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* max-width: calc(100% - 40px); */
+}
+
+/* .task-name-label, .task-note-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 25%;
+} */
+
+.task-name-label:hover, .task-note-label:hover {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+    max-width: none;
 }
 
 .task-priority-label {
-    /* flex:1; */
-    /* flex-basis: 1%; */
-    /* align-items: center; */
     flex: 0 0 10%;
-    /* margin-left: 20%; */
-    /* position: relative; */
-    /* left: 25%; */
-    /* margin-right: 10px; */
     color: green;
     font-size: .6em;
 }
 
 .task-due-date-label {
-    /* flex: 1; */
-    /* flex-basis: 1%; */
-    /* position: relative; */
-    /* left: 45%; */
     flex: 0 0 20%;
-    /* margin-left: 35%; */
     color: brown;
     font-size: .6em;
 }
@@ -256,6 +283,7 @@ form {
     position: absolute;
 }
 
+/* checkbox radio button */
 .custom-checkbox {
     --size: 0.75em;
     display: inline-block;
@@ -289,9 +317,11 @@ form {
     opacity: 0.5;
 }
 
+/* manages 'task complete' strike through*/
 /* .task label::after { */
-.task-name-label::after {
+.task-name-label::after  {
     content: '';
+    /* with .task-name-label position: relative; */
     position: absolute;
     left: 1.5em;
     right: 0;
@@ -308,11 +338,12 @@ form {
     transform-origin: initial;
 }
 
-.task::after {
-    /* what does this do? */
+/* what does this do? Don't see a use for this */
+/* should this be .task-temp? */
+.task::after {  
     content: '';
     position: absolute;
-}
+} 
 
 .delete-buttons {
     display: flex;

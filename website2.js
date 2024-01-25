@@ -1,9 +1,11 @@
 //ToDo List
 
-//To Work On: break into grid so that lists and tasks can manage their own height/spacing. Clicking anywhere on the .tasks row marks item done, limit this to just the task name. Make sure this looks proper for all different screen sizes.
+//To Work On:
+//  body: task-list loses delete button visibility if all-lists is too long.
 //.task-list: How to make .tasks spacing conform to the space of .task-list not the full page.  This seems important for change to screen size view.
-//Note functionality: move cursor into note input field upon click, create an edit/delete button upon hover, display x characters, display full note on hover inside popup window. 
-//Priority: radio button options, break into a popup window with the cursor inside the field. Color priority based on option selected.   
+//.tasks: get elements to all align to the center, completed strike through needs to run through the center of just the button and the task name.  Clicking anywhere on the .tasks row marks item done, limit this to just the task name. Make sure this looks proper for all different screen sizes.
+//Note functionality: display x characters, display full note on hover inside popup window with delete/edit buttons.
+//Priority: radio button options, break into a popup window with the cursor inside the field. Color priority based on option selected.
 //Calendar: logic to convert input string to a date with two year display, add option to use a calendar. Hover over task dueDate allows change? Get dueDate displaying margin-right.
 //Task buttons to icons:
 
@@ -34,9 +36,6 @@ const deleteListButton = document.querySelector("[data-delete-list-button]");
 const clearCompleteTasksButton = document.querySelector(
   "[data-clear-complete-tasks-button]"
 );
-
-let taskNoteValue = "";
-// let selectedPriority = "";
 
 // Local Storage Elements
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
@@ -113,20 +112,19 @@ newTaskForm.addEventListener("submit", (e) => {
 taskNoteButton.addEventListener("click", (e) => {
   e.preventDefault();
   taskNoteInput.style.display = "block";
-  //Move curser into field upon button click
+  taskNoteInput.focus();
 });
 
 taskPriorityButton.addEventListener("click", (e) => {
   e.preventDefault();
   taskPriorityOptions.style.display = "block";
+  // taskPriorityButton.focus();
   // selectPriority()
 });
 
 taskPriorityOptions.addEventListener("change", (e) => {
   if (e.target.type === "radio" && e.target.checked) {
-    const radioButtons = taskPriorityOptions.querySelectorAll(
-      'input[type="radio"]'
-    );
+    const radioButtons = taskPriorityOptions.querySelectorAll('input [type="radio"]');
     radioButtons.forEach((radioButton) => {
       if (radioButton !== e.target) {
         radioButton.checked = false;
@@ -138,6 +136,7 @@ taskPriorityOptions.addEventListener("change", (e) => {
 taskDueDateButton.addEventListener("click", (e) => {
   e.preventDefault();
   taskDueDateInput.style.display = "block";
+  taskDueDateInput.focus();
 });
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
@@ -172,7 +171,6 @@ function createTask(name, note, priority, dueDate) {
     // dueDate: new Date(dueDate) || '',
     complete: false,
   };
-  const selectedPriority = e.target.value;
 }
 
 //function createNote() {}
@@ -232,6 +230,7 @@ function renderTaskCount(selectedList) {
 }
 
 function renderTasks(selectedList) {
+  //Does this need to be broken down?
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
     console.log("rTask,taskTemplate:", taskTemplate.content);
@@ -245,7 +244,6 @@ function renderTasks(selectedList) {
     taskNameLabel.htmlFor = task.id;
     taskNoteLabel.htmlFor = task.id;
     taskPriorityLabel.htmlFor = task.id;
-    console.log("renderTask, taskElement:", taskElement);
     taskDueDateLabel.htmlFor = task.id;
     taskNameLabel.append(task.name);
     taskNoteLabel.append(task.note);
