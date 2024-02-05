@@ -57,7 +57,7 @@ li {
 }
 
 li::before {
-    /* makes the bullet point the specific one displayed */
+    /* style of visible bullet point*/
     content: '\2022';
     display: inline-block;
 }
@@ -93,29 +93,21 @@ form {
     color: var(--clr-primary);
 }
 
-.task-body form{
+.task-body form {
     display: flex;
-    justify-content: space-between;   
+    justify-content: space-between;
 }
 
 .task-btn {
     display: flex;
     align-items: center;
-    /* position: relative; */
-    /* justify-content: space-between; */
     order: 3;
-    /* margin-left: 0.1em; */
     margin: .25em .25em .25em .25em;
-    /* justify-content: end; */
 }
 
 .btn:hover {
     opacity: 0.4;
 }
-
-/* .btn.create:hover {
-    opacity: 0.4;
-} */
 
 .btn.delete {
     font-weight: 700;
@@ -137,7 +129,7 @@ form {
     outline: none;
     padding: .25em;
     order: 2;
-    /* by assigning flex to form and order 2 here button will appear in front but tab function will go input text to button */
+    /* by assigning flex to form and order 2 to .new button will appear first and tab will go from input text to + button */
 }
 
 .new.task::placeholder {
@@ -160,7 +152,6 @@ form {
 .active-list {
     font-weight: bold;
     font-size: 1.3rem;
-
 }
 
 .task-list {
@@ -180,7 +171,7 @@ form {
 
 .list-title {
     margin: 0 1em 0;
-    /* maintain spacing if long task name */
+    /* maintain spacing if long list name */
 }
 
 .task-count {
@@ -195,69 +186,30 @@ form {
 
 .task-temp {
     display: flex;
-    /* justify-content: space-between; */
-    /* align-items: center; */
-    /* position: relative; */
 }
 
-/* .task-label {
-    position:absolute;
-} */
-
-/* .task label { */
 .task-name-label {
-    position: relative; 
-    /* position: absolute; */
-    /* left: 0; */
-    /* flex:1;   */
-    
-    /* display: inline-flex; */
+    position: relative;
     align-items: center;
     cursor: pointer;
     margin-bottom: .15em;
     margin-right: auto;
-
     display: flex;
-    overflow:hidden;
+    overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipses;
-    max-width: calc(100% - 100px);
+    /* text-overflow: ellipsis; */
+    max-width: calc(100% - 300px);
+    /* allows a small whitespace between task name and notes */
 }
 
 .task-note-label {
-    /* display: inline-flex; */
-    /* display: flex; */
-    /* centers text top to bottom */
-    /* align-items: center; */
-    /* justify-content: start; */
-    /* position: relative; */
-    /* left: 15%; */
-    /* flex-grow: 1; */
-    /* align-self: center; */
-    /* align-items: center; */
-    /* flex: 1; */
-    /* margin-left: 10%; */
-    /* margin-right: 10px; */
-    /* flex-basis: 70%; */
-
     flex: 0 0 35%;
     color: purple;
     font-size: .6em;
-
-    /* flex-grow: 1; */
-    /* flex-shrink: 1; */
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    /* max-width: calc(100% - 40px); */
 }
-
-/* .task-name-label, .task-note-label {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 25%;
-} */
 
 .task-name-label:hover, .task-note-label:hover {
     overflow: visible;
@@ -283,7 +235,7 @@ form {
     position: absolute;
 }
 
-/* checkbox radio button */
+/* visible checkbox radio button */
 .custom-checkbox {
     --size: 0.75em;
     display: inline-block;
@@ -295,17 +247,17 @@ form {
     border-radius: 50%;
     transform: scale(1);
     transition: transform 200ms ease-in-out;
+    flex-shrink: 0;
+    /* prevents shrinking with long task name */
 }
 
-/* .task:hover .custom-checkbox, 
-[type="checkbox"]:focus+label .custom-checkbox { */
-/* changing from the above prevents note affecting task on hover*/
-.task-name-label:hover .custom-checkbox {
+/* .task-name-label:hover .custom-checkbox { */
+/* changing from the above allows whole line to hover*/
+.task-temp:hover .custom-checkbox {
     transform: scale(1.2);
     color: var(--clr-primary);
 }
 
-/* [type="checkbox"]:checked .custom-checkbox { */
 [type="checkbox"]:checked+.task-name-label .custom-checkbox {
     background: var(--clr-primary);
     border-color: var(--clr-primary);
@@ -313,15 +265,12 @@ form {
 }
 
 [type='checkbox']:checked+.task-name-label {
-    /* [type='checkbox']:checked { */
     opacity: 0.5;
 }
 
 /* manages 'task complete' strike through*/
-/* .task label::after { */
-.task-name-label::after  {
+.task-name-label::after {
     content: '';
-    /* with .task-name-label position: relative; */
     position: absolute;
     left: 1.5em;
     right: 0;
@@ -332,7 +281,6 @@ form {
     transition: transform 200ms ease-in-out;
 }
 
-/* [type='checkbox']:checked+label::after { */
 [type='checkbox']:checked+.task-name-label::after {
     transform: scaleX(1);
     transform-origin: initial;
@@ -340,10 +288,10 @@ form {
 
 /* what does this do? Don't see a use for this */
 /* should this be .task-temp? */
-.task::after {  
+.task::after {
     content: '';
     position: absolute;
-} 
+}
 
 .delete-buttons {
     display: flex;

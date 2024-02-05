@@ -3,9 +3,11 @@
 //To Work On:
 //  body: task-list loses delete button visibility if all-lists is too long.
 //.task-list: How to make .tasks spacing conform to the space of .task-list not the full page.  This seems important for change to screen size view.
-//.tasks: get elements to all align to the center, completed strike through needs to run through the center of just the button and the task name.  Clicking anywhere on the .tasks row marks item done, limit this to just the task name. Make sure this looks proper for all different screen sizes.
-//Note functionality: display x characters, display full note on hover inside popup window with delete/edit buttons.
-//Priority: radio button options, break into a popup window with the cursor inside the field. Color priority based on option selected.
+//new task submit button (+). Leave btn at beginning but move to end of tab trail after due date.
+// notes,priority,dueDate are not centered in task-temp.
+// click on note/priority/dueDate again to close pop up.
+//Note functionality: hover shows rest of note and delete/edit buttons.
+//Priority: place popup window in a better location. Color priority based on option selected.
 //Calendar: logic to convert input string to a date with two year display, add option to use a calendar. Hover over task dueDate allows change? Get dueDate displaying margin-right.
 //Task buttons to icons:
 
@@ -16,12 +18,12 @@ const newListInput = document.querySelector("[data-new-list-input]");
 const taskDisplayContainer = document.querySelector(
   "[data-task-display-container]"
 );
-const listTitleElement = document.querySelector("[data-list-title");
+const listTitleElement = document.querySelector("[data-list-title]");
 const taskCountElement = document.querySelector("[data-task-count]");
 const taskContainer = document.querySelector("[data-tasks]");
 const taskTemplate = document.getElementById("task-template");
-const newTaskForm = document.querySelector("[data-new-task-form");
-const newTaskInput = document.querySelector("[data-new-task-input");
+const newTaskForm = document.querySelector("[data-new-task-form]");
+const newTaskInput = document.querySelector("[data-new-task-input]");
 const taskNoteButton = document.querySelector("[data-task-notes-button]");
 const taskNoteInput = document.querySelector("[data-task-note-input]");
 const taskPriorityButton = document.querySelector(
@@ -76,62 +78,47 @@ newListForm.addEventListener("submit", (e) => {
 newTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskName = newTaskInput.value;
-  taskNoteInput.style.display = "none";
-  taskPriorityOptions.style.display = "none";
-  taskDueDateInput.style.display = "none";
+  hideTaskDetails();
   if (taskName == null || taskName == "") return;
   const taskNote = taskNoteInput.value;
   const taskPriority =
     taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value ||
     "";
-  // console.log("nTFpriority:", taskPriority);
-
   const dueDate = taskDueDateInput.value;
-
-  // const task = createTask(taskName, taskNote, taskPriority);
   const task = createTask(taskName, taskNote, taskPriority, dueDate);
   newTaskInput.value = null;
   taskNoteInput.value = null;
-  const radioButtons = taskPriorityOptions.querySelectorAll(
-    'input[type="radio"]'
-  );
-  radioButtons.forEach((radioButton) => {
-    radioButton.checked = false;
-  });
-
   taskDueDateInput.value = null;
-
+  resetPriorityRadioButtons(taskPriorityOptions);
   const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
-  console.log("nTF, array item", selectedList);
-
-  //Probably need to break this bloat into a couple functions: radioButtonReset,
+  // console.log("nTF, array item", selectedList);
 });
 
 taskNoteButton.addEventListener("click", (e) => {
   e.preventDefault();
   taskNoteInput.style.display = "block";
-  taskNoteInput.focus();
+  taskNoteInput.focus(); //moves cursor into note field
 });
 
 taskPriorityButton.addEventListener("click", (e) => {
   e.preventDefault();
   taskPriorityOptions.style.display = "block";
-  // taskPriorityButton.focus();
-  // selectPriority()
 });
 
-taskPriorityOptions.addEventListener("change", (e) => {
-  if (e.target.type === "radio" && e.target.checked) {
-    const radioButtons = taskPriorityOptions.querySelectorAll('input [type="radio"]');
-    radioButtons.forEach((radioButton) => {
-      if (radioButton !== e.target) {
-        radioButton.checked = false;
-      }
-    });
-  }
-});
+// taskPriorityOptions.addEventListener("change", (e) => {
+//   if (e.target.type === "radio" && e.target.checked) {
+//     const radioButtons = taskPriorityOptions.querySelectorAll(
+//       'input[type="radio"]'
+//     );
+//     radioButtons.forEach((radioButton) => {
+//       if (radioButton !== e.target) {
+//         radioButton.checked = false;
+//       }
+//     });
+//   }
+// });
 
 taskDueDateButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -160,7 +147,6 @@ function createList(name) {
   };
 }
 
-// function createTask(name, note, priority) {
 function createTask(name, note, priority, dueDate) {
   return {
     id: Date.now().toString(),
@@ -171,9 +157,20 @@ function createTask(name, note, priority, dueDate) {
     // dueDate: new Date(dueDate) || '',
     complete: false,
   };
+} 
+
+function hideTaskDetails() {
+  taskNoteInput.style.display = "none";
+  taskPriorityOptions.style.display = "none";
+  taskDueDateInput.style.display = "none";
 }
 
-//function createNote() {}
+function resetPriorityRadioButtons(container) {
+  const radioButtons = container.querySelectorAll('input[type="radio"]');
+  radioButtons.forEach((radioButton) => {
+    radioButton.checked = false;
+  });
+}
 
 function saveAndRender() {
   save();
@@ -193,7 +190,7 @@ function render() {
   if (selectedListId == null) {
     taskDisplayContainer.style.display = "none";
   } else {
-    taskDisplayContainer.style.display = "";
+    taskDisplayContainer.style.display = "block";
     listTitleElement.innerText = selectedList.name;
     renderTaskCount(selectedList);
     clearElement(taskContainer);
@@ -233,7 +230,7 @@ function renderTasks(selectedList) {
   //Does this need to be broken down?
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
-    console.log("rTask,taskTemplate:", taskTemplate.content);
+    //console.log("rTask,taskTemplate:", taskTemplate.content);
     const checkbox = taskElement.querySelector("input");
     checkbox.id = task.id;
     checkbox.checked = task.complete;
