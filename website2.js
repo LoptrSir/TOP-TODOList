@@ -98,32 +98,33 @@ newTaskForm.addEventListener("submit", (e) => {
 
 taskNoteButton.addEventListener("click", (e) => {
   e.preventDefault();
-  taskNoteInput.style.display = "block";
-  taskNoteInput.focus(); //moves cursor into note field
+  // taskNoteInput.style.display = "block";
+  // taskNoteInput.focus(); //moves cursor into note field
+  toggleInputField(taskNoteInput);
 });
 
 taskPriorityButton.addEventListener("click", (e) => {
   e.preventDefault();
-  taskPriorityOptions.style.display = "block";
+  // taskPriorityOptions.style.display = "block";
+  toggleInputField(taskPriorityOptions);
 });
-
-// taskPriorityOptions.addEventListener("change", (e) => {
-//   if (e.target.type === "radio" && e.target.checked) {
-//     const radioButtons = taskPriorityOptions.querySelectorAll(
-//       'input[type="radio"]'
-//     );
-//     radioButtons.forEach((radioButton) => {
-//       if (radioButton !== e.target) {
-//         radioButton.checked = false;
-//       }
-//     });
-//   }
-// });
 
 taskDueDateButton.addEventListener("click", (e) => {
   e.preventDefault();
-  taskDueDateInput.style.display = "block";
-  taskDueDateInput.focus();
+  // taskDueDateInput.style.display = "block";
+  // taskDueDateInput.focus();
+  toggleInputField(taskDueDateInput)
+  const input = taskDueDateInput.value;
+  // const isValidFormat = /^\d{2}\/\d{2}\/\d{2}$/.test(input);
+  // if (!isValidFormat) {
+
+  //Removed to make code work without vetting valid date.
+  //   const isValidDate = isValidDateValue(input);
+  //   if(!isValidDate) {
+  //   taskDueDateInput.setCustomValidity('Please enter a valid mm/dd/yy format');
+  // } else {
+  //   taskDueDateInput.setCustomValidity('');
+  // }
 });
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
@@ -170,6 +171,29 @@ function resetPriorityRadioButtons(container) {
   radioButtons.forEach((radioButton) => {
     radioButton.checked = false;
   });
+}
+
+function toggleInputField(inputField) {
+  if (inputField.style.display === 'block'){
+    inputField.style.display = 'none';
+  } else {
+    inputField.style.display = 'block';
+    inputField.focus();
+  }
+}
+
+function isValidDateValue(input) {
+  // the 2 lines below did not work
+  // const date = new Date(input);
+  // return !isNaN(date.getTime());
+  const [month, day, year] = input.split('/');
+  const parsedMonth = parseInt(month, 10);
+  const parsedDay = parseInt(day, 10);
+  const parsedYear = parseInt(year, 10);
+  // const adjustedYear = parsedYear >= 0 && parsedYear <= 99 ? 2000 + parsedYear : parsedYear;
+  // const date = new Date(adjustedYear, parsedMonth - 1, parsedDay);
+  // return date.getFullYear() === adjustedYear && date.getMonth() === parsedMonth - 1 && date.getDate() === parsedDay;
+  // }
 }
 
 function saveAndRender() {
