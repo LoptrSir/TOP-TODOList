@@ -41,13 +41,6 @@
               aria-label="New Task Name"
             />
             <button
-              class="btn create"
-              id="btn-create-task"
-              aria-label="Create New Task"
-            >
-              +
-            </button>
-            <button
               class="btn task-btn"
               data-task-notes-button
               aria-label="Note Button"
@@ -57,7 +50,7 @@
             <input
               type="text"
               data-task-note-input
-              class="task-note"
+              class="tasks task-note"
               placeholder="Add a Note"
               aria-label="Add a Note"
               style="display: none"
@@ -75,7 +68,7 @@
                   type="radio"
                   value="high"
                   name="high"
-                  class="new-task-priority"
+                  class="tasks new-task-priority"
                 />
                 High
               </label>
@@ -84,7 +77,7 @@
                   type="radio"
                   value="med"
                   name="med"
-                  class="new-task-priority"
+                  class="tasks new-task-priority"
                 />
                 Medium
               </label>
@@ -93,7 +86,7 @@
                   type="radio"
                   value="low"
                   name="low"
-                  class="new-task-priority"
+                  class="tasks new-task-priority"
                 />
                 Low
               </label>
@@ -108,12 +101,18 @@
             <input
               type="text"
               data-task-due-date-input
-              class="task-due-date"
+              class="tasks task-due-date"
               placeholder="Due Date"
               aria-label="Due Date"
               style="display: none"
             />
-
+            <button
+            class="btn create"
+            id="btn-create-task"
+            aria-label="Create New Task"
+          >
+            +
+          </button>
           </form>
         </div>
         <div class="delete-buttons">

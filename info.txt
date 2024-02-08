@@ -1,6 +1,7 @@
 TOP project: TODO List 
 
-2/7 1601 a futile day of working to get DueDate vetted against a valid date.  Leanred some stuff but accomplished no forward progress with code.
+2/8 1534 Due Date now functions with mm/dd/yy format and rejects invalid dates. Corrected issue with adding to My Lists causing Task List to grow. Task tab order now has create task button at the end, while keeping button visually at the front. Deleted old files that are no longer relevant to this project.
+2/7 1601 a futile day of working to get DueDate vetted against a valid date.  Learned some stuff but accomplished no forward progress with code.
 2/5 1414 spacing of task name overflow figured, whole line triggers hover. Broke hideTaskDetails and resetPriorityRadioButtons out of newTaskForm into their own functions. got rid of taskPriorityOptions eventListener into a function called in newTaskForm. 
 1/251500 misc styling done, task name and notes have limited display until hover.  Need to workout task name smashing checkbox.  note and dueDate moves cursor into input field upon click. Note, Priority and Due Date buttons have better spacing and New Task Input takes up less space. Fixed completed strike through to just task name.
 1/24 1427 created anb-4 branch, starting on calendar bits. Calendar displays based on entered text. .tasks alignment is getting better. vertical alignment works with flex: 0 0 x%; need to better understand these values. 
