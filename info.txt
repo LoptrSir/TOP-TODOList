@@ -1,3 +1,28 @@
 TOP project: TODO List 
 
+2/8 1534 Due Date now functions with mm/dd/yy format and rejects invalid dates. Corrected issue with adding to My Lists causing Task List to grow. Task tab order now has create task button at the end, while keeping button visually at the front. Deleted old files that are no longer relevant to this project.
+2/7 1601 a futile day of working to get DueDate vetted against a valid date.  Learned some stuff but accomplished no forward progress with code.
+2/5 1414 spacing of task name overflow figured, whole line triggers hover. Broke hideTaskDetails and resetPriorityRadioButtons out of newTaskForm into their own functions. got rid of taskPriorityOptions eventListener into a function called in newTaskForm. 
+1/251500 misc styling done, task name and notes have limited display until hover.  Need to workout task name smashing checkbox.  note and dueDate moves cursor into input field upon click. Note, Priority and Due Date buttons have better spacing and New Task Input takes up less space. Fixed completed strike through to just task name.
+1/24 1427 created anb-4 branch, starting on calendar bits. Calendar displays based on entered text. .tasks alignment is getting better. vertical alignment works with flex: 0 0 x%; need to better understand these values. 
+1021 cleaned up newTaskForm bloat, priority radio unchecks with another selection and clears all after submission.
+1/22 1350 priority properly displaying.
+1/19 1519 working on Note styling. got it to align better using flex:1 on task-name and task-note, Note no longer centering with align-items/align-self.
+1407 New Task Name Priority button works and displays 'hih' and clears the button field.  However, it always defaults to high.  Looks like there is a need to do some sort of loop/filter for checked.
+1/18 1551 Note field space between functions. Need to make sure clicking on note does not trigger chekbox::checked.  Started on Priority logic.
+1/17 1522 Note field displays upon note click, upon submit new task field goes away and task displays note.
+1/16 1359 add Note, Priority, DueDate buttons to task. Need to work on underlying functionality.
+1241 Working on making code mine.
+1/10 1426 JS video complete. Code functions.  Now to make it mine and add additional features like notes, due date and priority.
+1/9 1543 got a good chunk of JS written from the video. will finish tomorrow.
+1/8 1520 starting anew. Realizing I'm not thinking globally enough not seeing the forrest for the tree.  Just set up html and css based on https://www.youtube.com/watch?v=IhmSidOJSeE Will be spending time getting familiar with all the stuff I just picked up. next step will be to work on JS with https://www.youtube.com/watch?v=W7FaYfuwu70 then spending time understanding it then making it all mine.
+12/29 1458 undid most of  previous update. eventListeners are now just a doorway to createIems.js and modifyItems.js. Broke out getUserinput and updateDOM for more consistent SOLID principle. Working on changeItem: it seems straightforward enough to do that, but the execution is a pain.  I dont see a clean path to make sure existing categories and tasks maintain their unique NewSet data so things get changed and child tasks disappear as it is now.
+1039 getName functions moved into createCategory/createTask as they will only be used there and a single function to do this is consistent with DRY but improves readability.  createTask/createCategory merged into parent evenHandlers reducing # of js files. Functions are a bit bigger as a result but still readable and deal with one topic.
+12/28 1211 createTask modified to assign tasks to unique category. Tasks now appear under parent category. Deleting category deletes child tasks.
+1144 handleAddTask and createTask modified to track categoryName. Next step is to get category delete button to delete the child tasks too.
+12/27 1340: Also updated createTask to track and eliminate duplicate names. Delete button is mostly working, creating a dataset.name in createNewCategory/TaskDOM and assigning name to it did the trick.  However, if I delete a category the child task elements do not delete too.
+1102: multiple dead ends wandered down in assigning category ID as category name and tracking said name. This seems fixed, tweaked createCategory.js to track category names and compare for duplicate name. name is passed to createNewCategoryDOM then sanitized to pass it as id.
+12/19 1349: after a few days of going down the rabbit hole of overly complicated buttonActions array problems. Simplified things and making headway. Created Website1.js and function modules for import.  At this point masterList, addCategory, addTask generate proper buttons.  Add buttons work.
+12/14 
+1024 :Yesterday saw working on creating a buttons function that got out of whack, reset back to working form.
 12/12 11:14 :Creating basic file structure.
