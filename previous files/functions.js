@@ -23,7 +23,7 @@ import {
     taskDueDateInput,
     deleteListButton,
     clearCompleteTasksButton
-  } from './globalDeclarations.js';
+  } from '../globalDeclarations.js';
 //Local Storage
 import {
     LOCAL_STORAGE_LIST_KEY,

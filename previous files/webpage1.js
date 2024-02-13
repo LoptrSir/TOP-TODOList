@@ -74,10 +74,10 @@ import {
     taskDueDateInput,
     deleteListButton,
     clearCompleteTasksButton
-  } from './globalDeclarations.js';
+  } from '../globalDeclarations.js';
 
   //Event Listeners
-import * as eventListeners from './eventListeners2.js'
+import * as eventListeners from '../eventListeners2.js'
 
 
 // ^^^^^Local Storage Elements^^^^^
