@@ -3,61 +3,105 @@
 //To Work On:
 //Filter Tasks: priority, dueDate, date added. Filter secondary by non dominate selection.
 //Task: note, priority, and due date will not align-items: center without over riding ellipsis on note.
-//Task functionality: add a single edit button to the entire task OR have edits on hover of each element?
+//Task functionality: add a single edit button to the entire task OR have edits on hover of each element? 
 //Priority:Color priority based on option selected. (place popup window in a better location. later)
 //Calendar: Get dueDate displaying margin-right.
-//If no list active refresh displays blank task-list, should not display if no active list
 //Task buttons to icons?:
 //To ponder at a future date:
 //.task-list: Explore spacing of task elements to the container instead of the body.
 //Add Dark/Light display option.
 
-////////////////////////////////////////////////////////////////////////////
 
-//website2.js
+// ^^^^^Global Declarations^^^^^
+// const listsContainer = document.querySelector("[data-lists]");
+// const newListForm = document.querySelector("[data-new-list-form]");
+// const newListInput = document.querySelector("[data-new-list-input]");
+// const taskDisplayContainer = document.querySelector("[data-task-display-container]");
+// const listTitleElement = document.querySelector("[data-list-title]");
+// const taskCountElement = document.querySelector("[data-task-count]");
+// const taskContainer = document.querySelector
+// ^^^^^Global Declarations^^^^^
+// const listsContainer = document.querySelector("[data-lists]");
+// const newListForm = document.querySelector("[data-new-list-form]");
+// const newListInput = document.querySelector("[data-new-list-input]");
+// const taskDisplayContainer = document.querySelector("[data-task-display-container]");
+// const listTitleElement = document.querySelector("[data-list-title]");
+// const taskCountElement = document.querySelector("[data-task-count]");
+// const taskContainer = document.querySelector("[data-tasks]");
+// const taskTemplate = document.getElementById("task-template");
+// const newTaskForm = document.querySelector("[data-new-task-form]");
+// const newTaskInput = document.querySelector("[data-new-task-input]");
+// const taskNoteButton = document.querySelector("[data-task-notes-button]");
+// const taskNoteInput = document.querySelector("[data-task-note-input]");
+// const taskPriorityButton = document.querySelector("[data-task-priority-button]");
+// const taskPriorityOptions = document.querySelector(".task-priority-options");
+// const taskDueDateButton = document.querySelector("[data-task-due-date-button]");
+// const taskDueDateInput = document.querySelector("[data-task-due-date-input]");
+// const deleteListButton = document.querySelector("[data-delete-list-button]");
+// const clearCompleteTasksButton = document.querySelector("[data-clear-complete-tasks-button]");("[data-tasks]");
+// const taskTemplate = document.getElementById("task-template");
+// const newTaskForm = document.querySelector("[data-new-task-form]");
+// const newTaskInput = document.querySelector("[data-new-task-input]");
+// const taskNoteButton = document.querySelector("[data-task-notes-button]");
+// const taskNoteInput = document.querySelector("[data-task-note-input]");
+// const taskPriorityButton = document.querySelector("[data-task-priority-button]");
+// const taskPriorityOptions = document.querySelector(".task-priority-options");
+// const taskDueDateButton = document.querySelector("[data-task-due-date-button]");
+// const taskDueDateInput = document.querySelector("[data-task-due-date-input]");
+// const deleteListButton = document.querySelector("[data-delete-list-button]");
+// const clearCompleteTasksButton = document.querySelector("[data-clear-complete-tasks-button]");
+
+
 
 //Imports
 //Global Declarations
 import {
-  listsContainer,
-  newListForm,
-  newListInput,
-  taskDisplayContainer,
-  listTitleElement,
-  taskCountElement,
-  taskContainer,
-  taskTemplate,
-  newTaskForm,
-  newTaskInput,
-  taskNoteButton,
-  taskNoteInput,
-  taskPriorityButton,
-  taskPriorityOptions,
-  taskDueDateButton,
-  taskDueDateInput,
-  deleteListButton,
-  clearCompleteTasksButton,
-} from "./globalDeclarations.js";
+    listsContainer,
+    newListForm,
+    newListInput,
+    taskDisplayContainer,
+    listTitleElement,
+    taskCountElement,
+    taskContainer,
+    taskTemplate,
+    newTaskForm,
+    newTaskInput,
+    taskNoteButton,
+    taskNoteInput,
+    taskPriorityButton,
+    taskPriorityOptions,
+    taskDueDateButton,
+    taskDueDateInput,
+    deleteListButton,
+    clearCompleteTasksButton
+  } from '../globalDeclarations.js';
 
-//Local Storage
-import {
-  LOCAL_STORAGE_LIST_KEY,
-  LOCAL_STORAGE_SELECTED_LIST_ID_KEY,
-  lists as defaultLists,
-  selectedListId,
-} from "./localStorage.js";
-let lists = defaultLists;
+  //Event Listeners
+import * as eventListeners from '../eventListeners2.js'
 
-// //Event Listener Functions
-import * as eventListeners from "./eventListeners2.js";
 
-// ^^^^^Global Declarations^^^^^  moved into globalDeclarations.js
-// ^^^^^Local Storage Elements^^^^^  moved into localStorage.js
+// ^^^^^Local Storage Elements^^^^^
+export const LOCAL_STORAGE_LIST_KEY = "task.lists";
+export const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
+export let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
+export let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
 
-//Event Listeners to be moved to eventListeners2
+
+function setupEventListeners(){
+  listsContainer.addEventListener('click', eventListeners.handleListsContainer);
+}
+setupEventListeners();
+//^^^^^Event Listeners^^^^^
+// listsContainer.addEventListener("click", (e) => {
+//   if (e.target.tagName.toLowerCase() === "li") {
+//     selectedListId = e.target.dataset.listId;
+//     saveAndRender();
+//   }
+// });
+
 taskContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "input") {
-    const selectedList = lists.find((list) => list.id === selectedListId.value);
+    const selectedList = lists.find((list) => list.id === selectedListId);
     const selectedTask = selectedList.tasks.find(
       (task) => task.id === e.target.id
     );
@@ -72,11 +116,8 @@ newListForm.addEventListener("submit", (e) => {
   const listName = newListInput.value;
   if (listName == null || listName == "") return;
   const list = createList(listName);
-  // console.log('EL newListFormNAME:', list);
   newListInput.value = null;
   lists.push(list);
-  console.log("EL newListFormNAME:", list);
-  console.log("EL newListFormARRAY:", lists);
   saveAndRender();
 });
 
@@ -90,9 +131,9 @@ newTaskForm.addEventListener("submit", (e) => {
     taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value ||
     "";
   const dueDate = taskDueDateInput.value;
-  console.log("EL nTF date value:", dueDate);
-  if (!isValidDate(dueDate)) {
-    alert("Please enter valid mm/dd/yy");
+  console.log('nTF date value:', dueDate);
+  if(!isValidDate(dueDate)){
+    alert('Please enter valid mm/dd/yy' );
     taskDueDateInput.value = null;
     return;
   }
@@ -101,10 +142,10 @@ newTaskForm.addEventListener("submit", (e) => {
   taskNoteInput.value = null;
   taskDueDateInput.value = null;
   resetPriorityRadioButtons(taskPriorityOptions);
-  const selectedList = lists.find((list) => list.id === selectedListId.value);
+  const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks.push(task);
   saveAndRender();
-  // console.log("EL nTF, array item", selectedList);
+  // console.log("nTF, array item", selectedList);
 });
 
 taskNoteButton.addEventListener("click", (e) => {
@@ -119,37 +160,23 @@ taskPriorityButton.addEventListener("click", (e) => {
 
 taskDueDateButton.addEventListener("click", (e) => {
   e.preventDefault();
-  toggleInputField(taskDueDateInput);
+  toggleInputField(taskDueDateInput)
 });
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
-  const selectedList = lists.find((list) => list.id === selectedListId.value);
+  const selectedList = lists.find((list) => list.id === selectedListId);
   selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
   saveAndRender();
 });
 
 deleteListButton.addEventListener("click", (e) => {
-  lists = lists.filter((list) => list.id !== selectedListId.value);
-  selectedListId.value = null;
+  lists = lists.filter((list) => list.id !== selectedListId);
+  selectedListId = null;
   saveAndRender();
 });
 
-function setupEventListeners() {
-  listsContainer.addEventListener("click", eventListeners.handleListsContainer);
-  // taskContainer.addEventListener('click', eventListeners.handleTaskContainer);
-  // newListForm.addEventListener('click', eventListeners.handleNewListForm);
-  // newTaskForm.addEventListener('click', eventListeners.handleNewTaskForm);
-  // taskNoteButton.addEventListener('click', eventListeners.handleTaskNoteButton);
-  // taskPriorityButton.addEventListener('click', eventListeners.handleTaskPriorityButton);
-  // taskDueDateButton.addEventListener('click', eventListeners.handleTaskDueDateButton);
-  // clearCompleteTasksButton.addEventListener('click', eventListeners.handleClearCompleteTasksButton);
-  // deleteListButton.addEventListener('click', eventListeners.handleDeleteListButton);
-}
-setupEventListeners();
-
 //  ^^^^^Functions^^^^^
 function createList(name) {
-  console.log("F createList:", name);
   return {
     id: Date.now().toString(),
     name: name,
@@ -166,7 +193,7 @@ function createTask(name, note, priority, dueDate) {
     dueDate: dueDate || "",
     complete: false,
   };
-}
+} 
 
 function hideTaskDetails() {
   taskNoteInput.style.display = "none";
@@ -182,23 +209,23 @@ function resetPriorityRadioButtons(container) {
 }
 
 function toggleInputField(inputField) {
-  if (inputField.style.display === "block") {
-    inputField.style.display = "none";
+  if (inputField.style.display === 'block'){
+    inputField.style.display = 'none';
   } else {
-    inputField.style.display = "block";
+    inputField.style.display = 'block';
     inputField.focus();
   }
 }
 
 function isValidDate(dateString) {
-  if (dateString === "") {
+  if (dateString === ''){
     return true;
   }
   const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{2}$/;
   if (!datePattern.test(dateString)) {
     return false;
   }
-  const [month, day, year] = dateString.split("/").map(Number);
+  const [month, day, year] = dateString.split('/').map(Number);
   if (month < 1 || month > 12) {
     return false;
   }
@@ -218,19 +245,18 @@ export function saveAndRender() {
 }
 
 //Local Storage Creation/Save
-function save() {
+export function save() {
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
 }
 
-function render() {
+export function render() {
   clearElement(listsContainer);
   renderLists();
-  const selectedList = lists.find((list) => list.id === selectedListId.value);
-  if (selectedListId.value == null) {
+  const selectedList = lists.find((list) => list.id === selectedListId);
+  if (selectedListId == null) {
     taskDisplayContainer.style.display = "none";
   } else {
-    console.log("F render sl:", selectedList);
     taskDisplayContainer.style.display = "block";
     listTitleElement.innerText = selectedList.name;
     renderTaskCount(selectedList);
@@ -252,8 +278,7 @@ function renderLists() {
     listElement.dataset.listId = list.id;
     listElement.classList.add("list-name");
     listElement.innerText = list.name;
-    console.log("F rl sli:", selectedListId);
-    if (list.id === selectedListId.value) {
+    if (list.id === selectedListId) {
       listElement.classList.add("active-list");
     }
     listsContainer.appendChild(listElement);
@@ -272,7 +297,7 @@ function renderTasks(selectedList) {
   //Does this need to be broken down?
   selectedList.tasks.forEach((task) => {
     const taskElement = document.importNode(taskTemplate.content, true);
-    //console.log("F rTask,taskTemplate:", taskTemplate.content);
+    //console.log("rTask,taskTemplate:", taskTemplate.content);
     const checkbox = taskElement.querySelector("input");
     checkbox.id = task.id;
     checkbox.checked = task.complete;
@@ -292,4 +317,6 @@ function renderTasks(selectedList) {
   });
 }
 
+
+// This code stays put but moved above commented out bits.
 render();
