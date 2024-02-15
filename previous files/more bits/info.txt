@@ -1,5 +1,6 @@
 TOP project: TODO List 
 
+2/15 1223 Finally making headway. Figured out how to set up a sandbox by copy/past code manually then sharing the link. Reached out to UT JS Slack and got help with the issue of error: undefined variable.  part of the issue was importing and exporting selectedListId into and out of the same module.  Migrating SLI into localStorage.js helped clear it up.  Additionally the issue with SLI not updating its source in localStorage was resolved by using .value. At this point the code seems to be working correctly. Will start migrating next listener...
 2/13 1541 This is turning into a clusterfuck.  Breaking into modules and the relevant export/import is straight forward enough.  But now I'm getting a dirth of errors and conflicts.  Looking into setting up codecandbox.io so that I can share my code and seek assistance without putting my github out there.  Added a folder to repository to hold not current folder.
 2/9 
 10:25 Begining to breakup website2.js into separate relevant JS files.

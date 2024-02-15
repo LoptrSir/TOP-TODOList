@@ -1,33 +1,28 @@
-
 //Event Listeners
 
-//Import
+//This page holds the functions related to the event listeners.
+//eventListeners2.js
 
+//Imports
 //Local Storage
 import {
-    LOCAL_STORAGE_LIST_KEY,
-    LOCAL_STORAGE_SELECTED_LIST_ID_KEY,
-    // DEFAULT_VALUE,
-    lists,
-    // selectedListId,
-    // lists as defaultLists,
-    } from './website2.js';
+  LOCAL_STORAGE_LIST_KEY,
+  LOCAL_STORAGE_SELECTED_LIST_ID_KEY,
+  lists as defaultLists,
+  selectedListId,
+} from "./localStorage.js";
 
-//Event Listeners
-import {
-    selectedListId as defaultSelectedListId,
-    saveAndRender,
-} from './website2.js'; 
-// console.log('defaultSLI:', defaultSelectedListId);
+//Functions
+import { saveAndRender } from "./website2.js";
 
-// let lists = defaultLists
-let selectedListId = defaultSelectedListId;
-// let selectedListId = selectedListId;
-console.log('import SLI:', selectedListId);
+let lists = defaultLists;
+console.log("EL2 sli:", selectedListId);
 
+// Event Listener Functions
 export function handleListsContainer(e) {
-    if (e.target.tagName.toLowerCase() === "li") {
-      selectedListId = e.target.dataset.listId;
-      saveAndRender();
-    }
-  };
+  if (e.target.tagName.toLowerCase() === "li") {
+    selectedListId.value = e.target.dataset.listId;
+    console.log("EL F hlc sli:", selectedListId);
+    saveAndRender();
+  }
+}
