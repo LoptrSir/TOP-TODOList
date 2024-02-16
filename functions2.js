@@ -6,33 +6,25 @@
 //Imports
 //Global Declarations
 import {
-    listsContainer,
-    newListForm,
-    newListInput,
-    taskDisplayContainer,
-    listTitleElement,
-    taskCountElement,
-    taskContainer,
-    taskTemplate,
-    newTaskForm,
-    newTaskInput,
-    taskNoteButton,
-    taskNoteInput,
-    taskPriorityButton,
-    taskPriorityOptions,
-    taskDueDateButton,
-    taskDueDateInput,
-    deleteListButton,
-    clearCompleteTasksButton
-  } from './globalDeclarations.js';
+  listsContainer,
+  taskDisplayContainer,
+  listTitleElement,
+  taskCountElement,
+  taskContainer,
+  taskTemplate,
+  taskNoteInput,
+  taskPriorityOptions,
+  taskDueDateInput,
+} from "./globalDeclarations.js";
 //Local Storage
 import {
-    LOCAL_STORAGE_LIST_KEY,
-    LOCAL_STORAGE_SELECTED_LIST_ID_KEY,
-    lists,
-    selectedListId,
-} from './localStorage.js';
+  LOCAL_STORAGE_LIST_KEY,
+  LOCAL_STORAGE_SELECTED_LIST_ID_KEY,
+  lists,
+  selectedListId,
+} from "./localStorage.js";
 
+//Functions
 export function createList(name) {
   console.log("F createList:", name);
   return {
@@ -65,15 +57,15 @@ export function resetPriorityRadioButtons(container) {
     radioButton.checked = false;
   });
 }
-  
+
 export function toggleInputField(inputField) {
-    if (inputField.style.display === "block") {
-      inputField.style.display = "none";
-    } else {
-      inputField.style.display = "block";
-      inputField.focus();
-    }
+  if (inputField.style.display === "block") {
+    inputField.style.display = "none";
+  } else {
+    inputField.style.display = "block";
+    inputField.focus();
   }
+}
 
 export function isValidDate(dateString) {
   if (dateString === "") {
@@ -104,53 +96,50 @@ export function saveAndRender() {
 
 //Local Storage Creation/Save
 export function save() {
+  console.log("F save lists pre:", lists);
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
-  console.log('F save lists:', lists);
+  console.log("F save lists:", lists);
+  console.log("F save sli null:", selectedListId);
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
-// const selectedListExists = lists.some(list => list.id === selectedListId.value);
-// if (selectedListExists) {
-// localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId.value);
-// } else {
-//     localStorage.removeItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
-// }
+  console.log("F save sli null post:", selectedListId);
 }
 
- export function render() {
-    clearElement(listsContainer);
-    renderLists();
-    const selectedList = lists.find((list) => list.id === selectedListId.value);
-    if (selectedListId.value == null) {
-      taskDisplayContainer.style.display = "none";
-    } else {
-      console.log("F render sl:", selectedList);
-      taskDisplayContainer.style.display = "block";
-      listTitleElement.innerText = selectedList.name;
-      renderTaskCount(selectedList);
-      clearElement(taskContainer);
-      renderTasks(selectedList);
-    }
+export function render() {
+  clearElement(listsContainer);
+  renderLists();
+  const selectedList = lists.find((list) => list.id === selectedListId.value);
+  if (selectedListId.value == null) {
+    taskDisplayContainer.style.display = "none";
+  } else {
+    console.log("F render sl:", selectedList);
+    taskDisplayContainer.style.display = "block";
+    listTitleElement.innerText = selectedList.name;
+    renderTaskCount(selectedList);
+    clearElement(taskContainer);
+    renderTasks(selectedList);
   }
+}
 
 //clearElement avoids duplication of previously displayed items
-  function clearElement(element) {
-    while (element.firstChild) {
-      element.removeChild(element.firstChild);
-    }
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
   }
+}
 
-  function renderLists() {
-    lists.forEach((list) => {
-      const listElement = document.createElement("li");
-      listElement.dataset.listId = list.id;
-      listElement.classList.add("list-name");
-      listElement.innerText = list.name;
-      console.log("F rl sli:", selectedListId);
-      if (list.id === selectedListId.value) {
-        listElement.classList.add("active-list");
-      }
-      listsContainer.appendChild(listElement);
-    });
-  }
+function renderLists() {
+  lists.forEach((list) => {
+    const listElement = document.createElement("li");
+    listElement.dataset.listId = list.id;
+    listElement.classList.add("list-name");
+    listElement.innerText = list.name;
+    console.log("F rl sli:", selectedListId);
+    if (list.id === selectedListId.value) {
+      listElement.classList.add("active-list");
+    }
+    listsContainer.appendChild(listElement);
+  });
+}
 
 export function renderTaskCount(selectedList) {
   const incompleteTaskCount = selectedList.tasks.filter(
@@ -160,43 +149,41 @@ export function renderTaskCount(selectedList) {
   taskCountElement.innerText = `${incompleteTaskCount} ${taskString} remaining`;
 }
 
-  function renderTasks(selectedList) {
-    //Does this need to be broken down?
-    selectedList.tasks.forEach((task) => {
-      const taskElement = document.importNode(taskTemplate.content, true);
-      //console.log("F rTask,taskTemplate:", taskTemplate.content);
-      const checkbox = taskElement.querySelector("input");
-      checkbox.id = task.id;
-      checkbox.checked = task.complete;
-      const taskNameLabel = taskElement.querySelector(".task-name-label");
-      const taskNoteLabel = taskElement.querySelector(".task-note-label");
-      const taskPriorityLabel = taskElement.querySelector(".task-priority-label");
-      const taskDueDateLabel = taskElement.querySelector(".task-due-date-label");
-      taskNameLabel.htmlFor = task.id;
-      taskNoteLabel.htmlFor = task.id;
-      taskPriorityLabel.htmlFor = task.id;
-      taskDueDateLabel.htmlFor = task.id;
-      taskNameLabel.append(task.name);
-      taskNoteLabel.append(task.note);
-      taskPriorityLabel.append(task.priority);
-      taskDueDateLabel.append(task.dueDate);
-      taskContainer.appendChild(taskElement);
-    });
-  }
+function renderTasks(selectedList) {
+  selectedList.tasks.forEach((task) => {
+    const taskElement = document.importNode(taskTemplate.content, true);
+    const checkbox = taskElement.querySelector("input");
+    checkbox.id = task.id;
+    checkbox.checked = task.complete;
+    const taskNameLabel = taskElement.querySelector(".task-name-label");
+    const taskNoteLabel = taskElement.querySelector(".task-note-label");
+    const taskPriorityLabel = taskElement.querySelector(".task-priority-label");
+    const taskDueDateLabel = taskElement.querySelector(".task-due-date-label");
+    taskNameLabel.htmlFor = task.id;
+    taskNoteLabel.htmlFor = task.id;
+    taskPriorityLabel.htmlFor = task.id;
+    taskDueDateLabel.htmlFor = task.id;
+    taskNameLabel.append(task.name);
+    taskNoteLabel.append(task.note);
+    taskPriorityLabel.append(task.priority);
+    taskDueDateLabel.append(task.dueDate);
+    taskContainer.appendChild(taskElement);
+  });
+}
 
 //Export list for ease of copy/paste into other modules
 // import {
-// createList, 
-// createTask, 
-// hideTaskDetails, 
-// resetPriorityRadioButtons, 
-// toggleInputField, 
-// isValidDate, 
-// saveAndRender, 
-// save, 
-// render, 
-// clearElement, 
-// renderLists, 
-// renderTaskCount, 
+// createList,
+// createTask,
+// hideTaskDetails,
+// resetPriorityRadioButtons,
+// toggleInputField,
+// isValidDate,
+// saveAndRender,
+// save,
+// render,
+// clearElement,
+// renderLists,
+// renderTaskCount,
 // renderTasks,
 // } from './functions2.js';

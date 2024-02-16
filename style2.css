@@ -1,7 +1,9 @@
+/* TOP TODO List */
 /* TODO styling */
+
 /*why this doesn't this work. when applying the style to each individual element does?... <.task-name-label,.notes-label, .priority-label,.due-date-label { display: flex;align-items: center;}> */
 
-
+/* style2.css */
 :root {
     --clr-primary: rgb(211, 149, 240);
     --clr-light: #f4f4f4;
@@ -25,8 +27,7 @@ body {
     color: var(--clr-light);
     display: grid;
     grid:
-        'header header header header'auto 
-        "...... lists active ......"auto / 1fr minmax(100px, 300px) minmax(250px, 500px) 1fr;
+        'header header header header'auto "...... lists active ......"auto / 1fr minmax(100px, 300px) minmax(250px, 500px) 1fr;
 }
 
 .title {
@@ -77,7 +78,7 @@ form {
     display: flex;
 }
 
-/* a default set of parameters for most buttons */
+/* default set of parameters for most buttons */
 .btn {
     cursor: pointer;
     background: 0;
@@ -87,7 +88,8 @@ form {
 }
 
 .btn.create {
-    font-size: 1.5rem;grid-area: active;
+    font-size: 1.5rem;
+    grid-area: active;
     font-weight: 900;
     margin-right: 0.25em;
     transition: opacity 250ms ease-in;
@@ -103,9 +105,9 @@ form {
 }
 
 .task-btn {
-    /* display: flex; */
     align-items: center;
-    order: 3;grid-area: active;
+    order: 3;
+    grid-area: active;
     margin: .25em .25em .25em .25em;
 }
 
@@ -123,7 +125,8 @@ form {
     color: var(--clr-warning);
 }
 
-.new {grid-area: active;
+.new {
+    grid-area: active;
     background: transparent;
     border: 0;
     color: inherit;
@@ -133,7 +136,7 @@ form {
     outline: none;
     padding: .25em;
     order: 2;
-    /* applying flex to form allows order: 2 to display button first but maintain second position when using tab.  Why does this not impact the add task button? */
+    /* applying flex to <form> allows order: 2 to display button first but maintain second position when using tab.  Why does this not impact the add task button? */
 }
 
 .new.task::placeholder {
@@ -194,19 +197,6 @@ form {
     display: flex;
 }
 
-/* .task-name-label,
-.notes-label,
-.priority-label,
-.due-date-label {
-    display: flex;
-    align-items: center; 
-}   */
-
-/* .tasks {
-    display:flex;
-    align-items: center;
-} */
-
 .task-name-label {
     position: relative;
     align-items: center;
@@ -216,7 +206,7 @@ form {
     display: flex;
     overflow: hidden;
     white-space: nowrap;
-    /* text-overflow: ellipsis; MUST be adjusted in JS for effect*/ 
+    /* text-overflow: ellipsis; MUST be adjusted in JS for effect*/
     /* max-width: calc(100% - 300px);*/
     flex: 0 0 33%;
     /* resolves max-width not having a min size with window resize */
@@ -229,8 +219,6 @@ form {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    /* display:flex;
-    align-items: center; */
 }
 
 .task-name-label:hover, .task-note-label:hover {
@@ -244,16 +232,12 @@ form {
     flex: 0 0 10%;
     color: green;
     font-size: .6em;
-    /* display:flex;
-    align-items: center; */
 }
 
 .task-due-date-label {
     flex: 0 0 20%;
     color: brown;
     font-size: .6em;
-    /* display:flex;
-    align-items: center; */
 }
 
 [type='checkbox'] {
