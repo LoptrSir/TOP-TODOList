@@ -3,7 +3,7 @@
 //To Work On:
 //Filter Tasks: priority, dueDate, date added. Filter secondary by non dominate selection.
 //Task: note, priority, and due date will not align-items: center without over riding ellipsis on note.
-//Task functionality: add a single edit button to the entire task OR have edits on hover of each element? 
+//Task functionality: add a single edit button to the entire task OR have edits on hover of each element?
 //Priority:Color priority based on option selected. (place popup window in a better location. later)
 //Calendar: Get dueDate displaying margin-right.
 //Task buttons to icons?:
@@ -15,7 +15,9 @@
 const listsContainer = document.querySelector("[data-lists]");
 const newListForm = document.querySelector("[data-new-list-form]");
 const newListInput = document.querySelector("[data-new-list-input]");
-const taskDisplayContainer = document.querySelector("[data-task-display-container]");
+const taskDisplayContainer = document.querySelector(
+  "[data-task-display-container]"
+);
 const listTitleElement = document.querySelector("[data-list-title]");
 const taskCountElement = document.querySelector("[data-task-count]");
 const taskContainer = document.querySelector("[data-tasks]");
@@ -24,30 +26,39 @@ const newTaskForm = document.querySelector("[data-new-task-form]");
 const newTaskInput = document.querySelector("[data-new-task-input]");
 const taskNoteButton = document.querySelector("[data-task-notes-button]");
 const taskNoteInput = document.querySelector("[data-task-note-input]");
-const taskPriorityButton = document.querySelector("[data-task-priority-button]");
+const taskPriorityButton = document.querySelector(
+  "[data-task-priority-button]"
+);
 const taskPriorityOptions = document.querySelector(".task-priority-options");
 const taskDueDateButton = document.querySelector("[data-task-due-date-button]");
 const taskDueDateInput = document.querySelector("[data-task-due-date-input]");
 const deleteListButton = document.querySelector("[data-delete-list-button]");
-const clearCompleteTasksButton = document.querySelector("[data-clear-complete-tasks-button]");
+const clearCompleteTasksButton = document.querySelector(
+  "[data-clear-complete-tasks-button]"
+);
 
 // Local Storage Elements
 const LOCAL_STORAGE_LIST_KEY = "task.lists";
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = "task.selectedListId";
 let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
-let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
+// let selectedListId = localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY);
+let selectedListId = {
+  value: localStorage.getItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY),
+};
 
 //Event Listeners
 listsContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "li") {
-    selectedListId = e.target.dataset.listId;
+    // selectedListId = e.target.dataset.listId;
+    selectedListId.value = e.target.dataset.listId;
     saveAndRender();
   }
 });
 
 taskContainer.addEventListener("click", (e) => {
   if (e.target.tagName.toLowerCase() === "input") {
-    const selectedList = lists.find((list) => list.id === selectedListId);
+    // const selectedList = lists.find((list) => list.id === selectedListId);
+    const selectedList = lists.find((list) => list.id === selectedListId.value);
     const selectedTask = selectedList.tasks.find(
       (task) => task.id === e.target.id
     );
@@ -77,9 +88,9 @@ newTaskForm.addEventListener("submit", (e) => {
     taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value ||
     "";
   const dueDate = taskDueDateInput.value;
-  console.log('nTF date value:', dueDate);
-  if(!isValidDate(dueDate)){
-    alert('Please enter valid mm/dd/yy' );
+  console.log("nTF date value:", dueDate);
+  if (!isValidDate(dueDate)) {
+    alert("Please enter valid mm/dd/yy");
     taskDueDateInput.value = null;
     return;
   }
@@ -88,7 +99,8 @@ newTaskForm.addEventListener("submit", (e) => {
   taskNoteInput.value = null;
   taskDueDateInput.value = null;
   resetPriorityRadioButtons(taskPriorityOptions);
-  const selectedList = lists.find((list) => list.id === selectedListId);
+  // const selectedList = lists.find((list) => list.id === selectedListId);
+  const selectedList = lists.find((list) => list.id === selectedListId.value);
   selectedList.tasks.push(task);
   saveAndRender();
   // console.log("nTF, array item", selectedList);
@@ -106,18 +118,21 @@ taskPriorityButton.addEventListener("click", (e) => {
 
 taskDueDateButton.addEventListener("click", (e) => {
   e.preventDefault();
-  toggleInputField(taskDueDateInput)
+  toggleInputField(taskDueDateInput);
 });
 
 clearCompleteTasksButton.addEventListener("click", (e) => {
-  const selectedList = lists.find((list) => list.id === selectedListId);
+  // const selectedList = lists.find((list) => list.id === selectedListId);
+  const selectedList = lists.find((list) => list.id === selectedListId.value);
   selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
   saveAndRender();
 });
 
 deleteListButton.addEventListener("click", (e) => {
-  lists = lists.filter((list) => list.id !== selectedListId);
-  selectedListId = null;
+  // lists = lists.filter((list) => list.id !== selectedListId);
+  // selectedListId = null;
+  lists = lists.filter((list) => list.id !== selectedListId.value);
+  selectedListId.value = null;
   saveAndRender();
 });
 
@@ -139,7 +154,7 @@ function createTask(name, note, priority, dueDate) {
     dueDate: dueDate || "",
     complete: false,
   };
-} 
+}
 
 function hideTaskDetails() {
   taskNoteInput.style.display = "none";
@@ -155,23 +170,23 @@ function resetPriorityRadioButtons(container) {
 }
 
 function toggleInputField(inputField) {
-  if (inputField.style.display === 'block'){
-    inputField.style.display = 'none';
+  if (inputField.style.display === "block") {
+    inputField.style.display = "none";
   } else {
-    inputField.style.display = 'block';
+    inputField.style.display = "block";
     inputField.focus();
   }
 }
 
 function isValidDate(dateString) {
-  if (dateString === ''){
+  if (dateString === "") {
     return true;
   }
   const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{2}$/;
   if (!datePattern.test(dateString)) {
     return false;
   }
-  const [month, day, year] = dateString.split('/').map(Number);
+  const [month, day, year] = dateString.split("/").map(Number);
   if (month < 1 || month > 12) {
     return false;
   }
@@ -199,8 +214,10 @@ function save() {
 function render() {
   clearElement(listsContainer);
   renderLists();
-  const selectedList = lists.find((list) => list.id === selectedListId);
-  if (selectedListId == null) {
+  // const selectedList = lists.find((list) => list.id === selectedListId);
+  const selectedList = lists.find((list) => list.id === selectedListId.value);
+  // if (selectedListId == null) {
+  if (selectedListId.value == null) {
     taskDisplayContainer.style.display = "none";
   } else {
     taskDisplayContainer.style.display = "block";
@@ -224,7 +241,8 @@ function renderLists() {
     listElement.dataset.listId = list.id;
     listElement.classList.add("list-name");
     listElement.innerText = list.name;
-    if (list.id === selectedListId) {
+    // if (list.id === selectedListId) {
+    if (list.id === selectedListId.value) {
       listElement.classList.add("active-list");
     }
     listsContainer.appendChild(listElement);
