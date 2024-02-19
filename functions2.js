@@ -1,10 +1,9 @@
 //TOP TODO List
 //Functions
 
-//functions.js
+//functions2.js
 
 //Imports
-//Global Declarations
 import {
   listsContainer,
   taskDisplayContainer,
@@ -16,7 +15,7 @@ import {
   taskPriorityOptions,
   taskDueDateInput,
 } from "./globalDeclarations.js";
-//Local Storage
+
 import {
   LOCAL_STORAGE_LIST_KEY,
   LOCAL_STORAGE_SELECTED_LIST_ID_KEY,
@@ -94,7 +93,6 @@ export function saveAndRender() {
   render();
 }
 
-//Local Storage Creation/Save
 export function save() {
   console.log("F save lists pre:", lists);
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
@@ -170,20 +168,3 @@ function renderTasks(selectedList) {
     taskContainer.appendChild(taskElement);
   });
 }
-
-//Export list for ease of copy/paste into other modules
-// import {
-// createList,
-// createTask,
-// hideTaskDetails,
-// resetPriorityRadioButtons,
-// toggleInputField,
-// isValidDate,
-// saveAndRender,
-// save,
-// render,
-// clearElement,
-// renderLists,
-// renderTaskCount,
-// renderTasks,
-// } from './functions2.js';

@@ -4,7 +4,7 @@
 //eventListeners2.js
 
 //Imports
-//GlobalDeclarations
+
 import {
   newListInput,
   newTaskInput,
@@ -12,13 +12,13 @@ import {
   taskPriorityOptions,
   taskDueDateInput,
 } from "./globalDeclarations.js";
-//Local Storage
+
 import {
   lists as defaultLists,
   selectedListId,
 } from "./localStorage.js";
 let lists = defaultLists;
-//Functions
+
 import {
   createList,
   createTask,
@@ -116,7 +116,9 @@ export function handleClearCompleteTasksButton (e) {
 
 export function handleDeleteListButton (e) {
   console.log("EL dlb pre:", lists);
-  lists = lists.filter((list) => list.id !== selectedListId.value);
+  // lists = lists.filter((list) => list.id !== selectedListId.value);
+  //*****using splice instead of filter edits to origin lists in globalDeclarations instead of local lists declared after import.*****
+  lists.splice(lists.findIndex(list => list.id === selectedListId.value), 1);
   console.log("EL dlb:", lists);
   console.log("EL dlb sli:", selectedListId);
   selectedListId.value = null;
