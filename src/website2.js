@@ -43,4 +43,6 @@ function setupEventListeners() {
 }
 setupEventListeners();
 
+export default function website() {
 render();
+}

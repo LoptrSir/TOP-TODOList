@@ -1,5 +1,6 @@
 TOP project: TODO List 
 
+2/21 1449: starting to implement webpack bundling.
 2/19 1347: Fixed the problem with deleteListButton().  Using splice edits the existing list where filter generates a new list.  The import lists as defaultLists and the resulting redeclaration of lists causes the origin list to not update with the new filter array.
 2/16 1404: Migrated all bits to final modules. Addressed a few conflicts: handleNewForm eventListener was listening to entire form for a click causing conflict with notes, priority and due date. Changed focus to the button not the form (to newTaskButon). Found one issue to work on: Delete List button: handleDeleteListButton() display proper array without target, save() displays array with target, for some reason lists is not updating. Going to UT JS Slack for help.
 2/15 1446 Migrated functions to its own module, address import/export conflicts.  Now I am struggling with deleteListButton eventListener.  It properly creates an array without the target, yet save() has an array that include the target.  I suspect this has to do with selectedListId.value that was needed to address other issues.
