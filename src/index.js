@@ -1,4 +1,4 @@
-import website from './website2.js';
+import { website } from './website2.js';
 import './style2.css';
 
 website();
