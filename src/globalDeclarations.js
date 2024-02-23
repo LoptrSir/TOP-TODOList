@@ -1,5 +1,5 @@
 //TOP TODO List
-//Global Declarations
+//Global Declarations 
 
 //globalDeclarations.js
 export const listsContainer = document.querySelector("[data-lists]");
