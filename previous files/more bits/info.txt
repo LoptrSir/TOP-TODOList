@@ -1,5 +1,6 @@
 TOP project: TODO List 
 
+2/23 1208: github pages only publishes title. Moving index.html from dist to main.
 2/22 1416: Appears to have successfully migrated this into Webpack.  Need to test things a bit to confirm.
 2/21 1449: starting to implement webpack bundling.
 2/19 1347: Fixed the problem with deleteListButton().  Using splice edits the existing list where filter generates a new list.  The import lists as defaultLists and the resulting redeclaration of lists causes the origin list to not update with the new filter array.
