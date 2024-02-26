@@ -1,5 +1,6 @@
 TOP project: TODO List 
 
+2/26 1320: LoptrSir footer added
 2/23 1208: github pages only publishes title. Moving index.html from dist to main. updated index.html paths for website2.js and style2.css. Appears to work now. Sending link out to friends to try to break it.
 2/22 1416: Appears to have successfully migrated this into Webpack.  Need to test things a bit to confirm.
 2/21 1449: starting to implement webpack bundling.

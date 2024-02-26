@@ -1,6 +1,8 @@
 //TOP TODO List
 //ToDo List
 
+//Add LoptrSir footer.
+
 //To Work On:
 //Filter Tasks: priority, dueDate, date added. Filter secondary by non dominate selection.
 //Task: note, priority, and due date will not align-items: center without over riding ellipsis on note.
@@ -42,6 +44,23 @@ function setupEventListeners() {
   deleteListButton.addEventListener("click",eventListeners.handleDeleteListButton);
 }
 setupEventListeners();
+
+function myFooter() {
+  const footer = document.createElement("footer");
+  footer.style.backgroundColor = "#333";
+  footer.style.fontSize = "1rem";
+  footer.style.color = "#f8afe5";
+  footer.style.padding = "3px";
+  footer.style.textAlign = "center";
+  footer.style.position = "fixed";
+  footer.style.width = "100%";
+  footer.style.bottom = "0";
+  footer.innerHTML = "LoptrSir";
+  return footer;
+}
+
+  const footerDiv = document.querySelector(".footer");
+  footerDiv.appendChild(myFooter());
 
 export function website() {
 render();
