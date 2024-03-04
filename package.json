@@ -1,7 +1,7 @@
 {
   "name": "top-todolist",
   "version": "1.0.0",
-  "description": "TODO List project",
+  "description": "TODO List Project",
   "main": "webpack.config.js",
   "private": true,
   "scripts": {
