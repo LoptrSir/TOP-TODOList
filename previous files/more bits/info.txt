@@ -1,5 +1,7 @@
 TOP project: TODO List 
 
+3/4 1455: It seems everything has been moved properly adn the project is functioning. Pushing to github.
+1436: Worked on Webpack to properly bundle the project.  In the process of moving /dist files into main root for github to play nice.
 2/26 1320: LoptrSir footer added
 2/23 1208: github pages only publishes title. Moving index.html from dist to main. updated index.html paths for website2.js and style2.css. Appears to work now. Sending link out to friends to try to break it.
 2/22 1416: Appears to have successfully migrated this into Webpack.  Need to test things a bit to confirm.
