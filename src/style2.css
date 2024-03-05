@@ -139,8 +139,10 @@ form {
     /* applying flex to <form> allows order: 2 to display button first but maintain second position when using tab.  Why does this not impact the add task button? */
 }
 
-.new.task::placeholder {
+
+.new::placeholder {
     opacity: 0.5;
+    color: black;
 }
 
 .new:focus {
@@ -148,7 +150,7 @@ form {
 }
 
 .new:focus::placeholder {
-    opacity: 0.6;
+    opacity: 0.3;
 }
 
 .new.task {
