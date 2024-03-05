@@ -126,6 +126,12 @@ function clearElement(element) {
 }
 
 function renderLists() {
+  if (lists.length === 0) {
+    const defaultListName = 'Example ToDo List';
+    const defaultList = createList(defaultListName);
+    lists.push(defaultList);
+    selectedListId.value = defaultList.id;
+  }
   lists.forEach((list) => {
     const listElement = document.createElement("li");
     listElement.dataset.listId = list.id;

@@ -62,6 +62,12 @@ export function handleNewListForm(e) {
   // console.log('EL newListFormNAME:', list);
   newListInput.value = null;
   lists.push(list);
+  //attempt to add default list. put in wrong place.
+  // if (lists.length === 1) {
+  //   const defaultListName = 'Example ToDo List';
+  //   const defaultList = createList(defaultListName);
+  //   lists.push(defaultList);
+  // }
   console.log("EL newListFormNAME:", list);
   console.log("EL newListFormARRAY:", lists);
   saveAndRender();
@@ -76,14 +82,14 @@ export function handleNewTaskForm(e) {
   const taskPriority =
     taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value ||
     "";
-  const dueDate = taskDueDateInput.value;
-  console.log("EL nTF date value:", dueDate);
-  if (!isValidDate(dueDate)) {
+  const taskDueDate = taskDueDateInput.value;
+  console.log("EL nTF date value:", taskDueDate);
+  if (!isValidDate(taskDueDate)) {
     alert("Please enter valid mm/dd/yy");
     taskDueDateInput.value = null;
     return;
   }
-  const task = createTask(taskName, taskNote, taskPriority, dueDate);
+  const task = createTask(taskName, taskNote, taskPriority, taskDueDate);
   newTaskInput.value = null;
   taskNoteInput.value = null;
   taskDueDateInput.value = null;

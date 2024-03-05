@@ -4,6 +4,7 @@
 //Add LoptrSir footer.
 
 //To Work On:
+// Lists that are longer than space needs new task name treatment.
 //Filter Tasks: priority, dueDate, date added. Filter secondary by non dominate selection.
 //Task: note, priority, and due date will not align-items: center without over riding ellipsis on note.
 //Task functionality: add a single edit button to the entire task OR have edits on hover of each element?

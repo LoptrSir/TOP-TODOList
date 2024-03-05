@@ -1,7 +1,8 @@
 TOP project: TODO List 
 
 
-3/5 1212: It seems moving the dist files to root causes issues with config.js clean = true as it deletes the folders before rebuilding, this deletes all of the files that are not built at that moment causing the need to delete the folder and git clone the repository... Going forward i will not modify package.json or config.js to point towards the root.  Will just move the /dist file into root.  Future calls of <npx webpack> will require deleting the root files to avoid duplication.
+3/5 1432: working on adding default values for visual clarity. DefaultList create. need to work on adding tasks to it.
+1212: It seems moving the dist files to root causes issues with config.js clean = true as it deletes the folders before rebuilding, this deletes all of the files that are not built at that moment causing the need to delete the folder and git clone the repository... Going forward i will not modify package.json or config.js to point towards the root.  Will just move the /dist file into root.  Future calls of <npx webpack> will require deleting the root files to avoid duplication.
 3/4 1455: It seems everything has been moved properly adn the project is functioning. Pushing to github.
 1436: Worked on Webpack to properly bundle the project.  In the process of moving /dist files into main root for github to play nice.
 2/26 1320: LoptrSir footer added
