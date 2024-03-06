@@ -1,7 +1,4 @@
 //TOP TODO List
-//Functions
-
-//functions2.js
 
 //Imports
 import {
@@ -24,8 +21,21 @@ import {
 } from "./localStorage.js";
 
 //Functions
+export function defaultDisplay() {
+  if (lists.length === 0) {
+    const defaultListName = "Example ToDo List";
+    const defaultList = createList(defaultListName);
+    defaultList.tasks.push(
+      createTask("Default Task 1", "Make a note", "High", "02/29/24")
+    );
+    defaultList.tasks.push(createTask("Default Task 2", "This is a note."));
+    defaultList.tasks.push(createTask("Default Task 3", "", "low"));
+    lists.push(defaultList);
+    selectedListId.value = defaultList.id;
+  }
+}
+
 export function createList(name) {
-  console.log("F createList:", name);
   return {
     id: Date.now().toString(),
     name: name,
@@ -94,12 +104,8 @@ export function saveAndRender() {
 }
 
 export function save() {
-  console.log("F save lists pre:", lists);
   localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
-  console.log("F save lists:", lists);
-  console.log("F save sli null:", selectedListId);
   localStorage.setItem(LOCAL_STORAGE_SELECTED_LIST_ID_KEY, selectedListId);
-  console.log("F save sli null post:", selectedListId);
 }
 
 export function render() {
@@ -109,7 +115,6 @@ export function render() {
   if (selectedListId.value == null) {
     taskDisplayContainer.style.display = "none";
   } else {
-    console.log("F render sl:", selectedList);
     taskDisplayContainer.style.display = "block";
     listTitleElement.innerText = selectedList.name;
     renderTaskCount(selectedList);
@@ -118,7 +123,7 @@ export function render() {
   }
 }
 
-//clearElement avoids duplication of previously displayed items
+//clearElement() avoids duplication of previously displayed elements.
 function clearElement(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -126,18 +131,11 @@ function clearElement(element) {
 }
 
 function renderLists() {
-  if (lists.length === 0) {
-    const defaultListName = 'Example ToDo List';
-    const defaultList = createList(defaultListName);
-    lists.push(defaultList);
-    selectedListId.value = defaultList.id;
-  }
   lists.forEach((list) => {
     const listElement = document.createElement("li");
     listElement.dataset.listId = list.id;
     listElement.classList.add("list-name");
     listElement.innerText = list.name;
-    console.log("F rl sli:", selectedListId);
     if (list.id === selectedListId.value) {
       listElement.classList.add("active-list");
     }
@@ -173,4 +171,17 @@ function renderTasks(selectedList) {
     taskDueDateLabel.append(task.dueDate);
     taskContainer.appendChild(taskElement);
   });
+}
+
+export function myFooter() {
+  const footer = document.querySelector(".footer");
+  footer.style.backgroundColor = "#333";
+  footer.style.fontSize = "1rem";
+  footer.style.color = "#f8afe5";
+  footer.style.padding = "3px";
+  footer.style.textAlign = "center";
+  footer.style.position = "fixed";
+  footer.style.width = "100%";
+  footer.style.bottom = "0";
+  footer.innerHTML = "LoptrSir";
 }

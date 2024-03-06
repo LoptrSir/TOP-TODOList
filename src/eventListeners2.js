@@ -1,22 +1,25 @@
 //TOP TODO List
 //Event Listener Functions
 
-//eventListeners2.js
-
 //Imports
-
 import {
   newListInput,
   newTaskInput,
   taskNoteInput,
   taskPriorityOptions,
   taskDueDateInput,
+  listsContainer,
+  newListForm,
+  taskContainer,
+  newTaskButton,
+  taskNoteButton,
+  taskPriorityButton,
+  taskDueDateButton,
+  deleteListButton,
+  clearCompleteTasksButton,
 } from "./globalDeclarations.js";
 
-import {
-  lists as defaultLists,
-  selectedListId,
-} from "./localStorage.js";
+import { lists as defaultLists, selectedListId } from "./localStorage.js";
 let lists = defaultLists;
 
 import {
@@ -31,13 +34,25 @@ import {
   renderTaskCount,
 } from "./functions2.js";
 
-console.log("EL2 sli:", selectedListId);
-
 // Event Listener Functions
+export function setupEventListeners() {
+  listsContainer.addEventListener("click", handleListsContainer);
+  taskContainer.addEventListener("click", handleTaskContainer);
+  newListForm.addEventListener("click", handleNewListForm);
+  newTaskButton.addEventListener("click", handleNewTaskForm);
+  taskNoteButton.addEventListener("click", handleTaskNoteButton);
+  taskPriorityButton.addEventListener("click", handleTaskPriorityButton);
+  taskDueDateButton.addEventListener("click", handleTaskDueDateButton);
+  clearCompleteTasksButton.addEventListener(
+    "click",
+    handleClearCompleteTasksButton
+  );
+  deleteListButton.addEventListener("click", handleDeleteListButton);
+}
+
 export function handleListsContainer(e) {
   if (e.target.tagName.toLowerCase() === "li") {
     selectedListId.value = e.target.dataset.listId;
-    console.log("EL F hlc sli:", selectedListId);
     saveAndRender();
   }
 }
@@ -59,17 +74,8 @@ export function handleNewListForm(e) {
   const listName = newListInput.value;
   if (listName == null || listName == "") return;
   const list = createList(listName);
-  // console.log('EL newListFormNAME:', list);
   newListInput.value = null;
   lists.push(list);
-  //attempt to add default list. put in wrong place.
-  // if (lists.length === 1) {
-  //   const defaultListName = 'Example ToDo List';
-  //   const defaultList = createList(defaultListName);
-  //   lists.push(defaultList);
-  // }
-  console.log("EL newListFormNAME:", list);
-  console.log("EL newListFormARRAY:", lists);
   saveAndRender();
 }
 
@@ -83,7 +89,6 @@ export function handleNewTaskForm(e) {
     taskPriorityOptions.querySelector('input[type="radio"]:checked')?.value ||
     "";
   const taskDueDate = taskDueDateInput.value;
-  console.log("EL nTF date value:", taskDueDate);
   if (!isValidDate(taskDueDate)) {
     alert("Please enter valid mm/dd/yy");
     taskDueDateInput.value = null;
@@ -114,21 +119,19 @@ export function handleTaskDueDateButton(e) {
   toggleInputField(taskDueDateInput);
 }
 
-export function handleClearCompleteTasksButton (e) {
+export function handleClearCompleteTasksButton(e) {
   const selectedList = lists.find((list) => list.id === selectedListId.value);
   selectedList.tasks = selectedList.tasks.filter((task) => !task.complete);
   saveAndRender();
-};
+}
 
-export function handleDeleteListButton (e) {
-  console.log("EL dlb pre:", lists);
+export function handleDeleteListButton(e) {
   // lists = lists.filter((list) => list.id !== selectedListId.value);
-  //*****using splice instead of filter edits to origin lists in globalDeclarations instead of local lists declared after import.*****
-  lists.splice(lists.findIndex(list => list.id === selectedListId.value), 1);
-  console.log("EL dlb:", lists);
-  console.log("EL dlb sli:", selectedListId);
+  //*****use splice edits original lists in globalDeclarations. filter works on local lists declared after import.*****
+  lists.splice(
+    lists.findIndex((list) => list.id === selectedListId.value),
+    1
+  );
   selectedListId.value = null;
-  console.log("EL dlb sli null:", selectedListId);
-  console.log("EL dlb null:", lists);
   saveAndRender();
-};
+}

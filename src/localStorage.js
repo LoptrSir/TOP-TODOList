@@ -1,7 +1,4 @@
 //TOP TODO List
-//Local Storage:
-
-//localStorage.js
 
 // Local Storage Elements
 export const LOCAL_STORAGE_LIST_KEY = "task.lists";

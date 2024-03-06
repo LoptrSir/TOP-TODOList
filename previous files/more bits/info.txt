@@ -1,6 +1,6 @@
 TOP project: TODO List 
 
-
+3/6  1526: general code presentability cleanup List name doesn't overflow. Defaults display with active status if no other lists present. created defaultDisplay() to address default list/tasks display. Moved evenListeners() into ./eventListeners2 Relocated myFooter() to ./functions2, working on adding default tasks to default list.
 3/5 1432: working on adding default values for visual clarity. DefaultList create. need to work on adding tasks to it.
 1212: It seems moving the dist files to root causes issues with config.js clean = true as it deletes the folders before rebuilding, this deletes all of the files that are not built at that moment causing the need to delete the folder and git clone the repository... Going forward i will not modify package.json or config.js to point towards the root.  Will just move the /dist file into root.  Future calls of <npx webpack> will require deleting the root files to avoid duplication.
 3/4 1455: It seems everything has been moved properly adn the project is functioning. Pushing to github.
